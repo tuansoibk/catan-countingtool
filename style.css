@@ -1,0 +1,56 @@
+body {
+  width: 400px;
+}
+
+button {
+  height: 30px;
+  width: 60px;
+  outline: none;
+  margin: 10px;
+  border: none;
+  border-radius: 2px;
+}
+
+button.current {
+  box-shadow: 0 0 0 2px white,
+              0 0 0 4px black;
+}
+
+.container {
+  border: solid 1px;
+  border-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.player,.bank {
+  display: flex;
+  flex-direction: row;
+}
+
+.resource {
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+}
+
+img {
+  width: 20px;
+  aspect-ratio: auto;
+  padding-left: 10px;
+  padding-right: 7px;
+}
+
+.counter {
+  font-size: large;
+}
+
+.resource-total {
+  height: 30px;
+  border: solid 1px;
+  border-color: black;
+}
+
+.total {
+  padding-right: 7px;
+}

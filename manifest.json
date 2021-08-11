@@ -1,0 +1,21 @@
+{
+    "name": "Catan Assistant",
+    "description": "Assistant for Catan at colonist.io",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "permissions": ["storage", "activeTab", "scripting"],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "64": "/images/favicon.png"
+        }
+    },
+    "icons": {
+        "64": "/images/favicon.png"
+    },
+    "options_page": "options.html"
+}
