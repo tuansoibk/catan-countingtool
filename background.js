@@ -1,9 +1,10 @@
-import { Player } from './model.js';
+import { DevCardDeck, Player } from './model.js';
 
 const SETTLEMENT_COST = 'lumber brick wool grain';
 const ROAD_COST = 'lumber brick';
 const CITY_COST = 'grain grain ore ore ore';
 const DEV_CARD_COST = 'wool grain ore';
+const MAX_RESOURCE_COUNT = 19;
 const MY_PLAYER_NAME = 'maximusbk';
 let player1 = undefined;
 let player2 = undefined;
@@ -11,6 +12,7 @@ let player3 = undefined;
 let player4 = undefined;
 let bank = undefined;
 let players = undefined;
+let devCards = undefined;
 
 function init() {
     player1 = new Player('Player1');
@@ -20,11 +22,13 @@ function init() {
     bank = new Player('Bank');
     bank.modifyResource(19, 19, 19, 19, 19, 0);
     players = new Map();
+    devCards = new DevCardDeck();
 
     chrome.storage.local.set({ 'player1': player1 });
     chrome.storage.local.set({ 'player2': player2 });
     chrome.storage.local.set({ 'player3': player3 });
     chrome.storage.local.set({ 'bank': bank });
+    chrome.storage.local.set({ 'devCards' : devCards });
     chrome.storage.local.set({ 'messageHashes': [] });
     console.log('Game model initiated');
 }
@@ -110,7 +114,7 @@ function consumeNewSteps() {
                 continue;
             }
 
-            match = /(\w+)\s*?gave bank:\s*?(.+)\s*?and took\s*?(\w+)/.exec(step);
+            match = /(\w+)\s*?gave bank:\s*?(.+)\s*?and took\s*?(.+)/.exec(step);
             if (match != null) {
                 consumeBankTrade(match);
                 continue;
@@ -127,20 +131,48 @@ function consumeNewSteps() {
                 consumeDiscardedResources(match, step);
                 continue;
             }
+
+            match = /(\w+)\s*?took from bank:\s*?(.+)/.exec(step);
+            if (match != null) {
+                consumeYearOfPlenty(match);
+                continue;
+            }
+
+            match = /(\w+)\s*?stole (\d+): (lumber|brick|wool|grain|ore)/.exec(step);
+            if (match != null) {
+                consumeMonopoly(match);
+                continue;
+            }
+
+            match = /(\w+)\s*?used\s*?(Knight|Road Building|Year of Plenty|Monopoly)/.exec(step);
+            if (match != null) {
+                consumeUsedDevCard(match);
+                continue;
+            }
         }
+        demystifyResourceCards();
         debugPlayers();
 
-        // update player info
-        chrome.storage.local.set({ 'player1': player1, 'player2': player2, 'player3': player3, 'bank': bank }, function() {
-            chrome.runtime.sendMessage(
-                {
-                    message: 'players update'
-                },
-                function (response) {
-                    console.log('players update response = ' + response.result);
-                }
-            );
-        });
+        // update counting
+        chrome.storage.local.set(
+            {
+                'player1': player1,
+                'player2': player2,
+                'player3': player3,
+                'bank': bank,
+                'devCards': devCards
+            },
+            function () {
+                chrome.runtime.sendMessage(
+                    {
+                        message: 'counting update'
+                    },
+                    function (response) {
+                        console.log('counting update response = ' + response.result);
+                    }
+                );
+            }
+        );
     });
 }
 
@@ -149,6 +181,7 @@ function debugPlayers() {
     console.log(JSON.stringify(player2));
     console.log(JSON.stringify(player3));
     console.log(JSON.stringify(player4));
+    console.log(JSON.stringify(bank));
 }
 
 function consumeNewPlayer(match) {
@@ -235,6 +268,7 @@ function consumeCity(match) {
 function consumeDevCard(match) {
     removeResources(players.get(match[1]), DEV_CARD_COST);
     addResources(bank, DEV_CARD_COST);
+    devCards.remainingCards--;
 }
 
 function consumeTrade(match) {
@@ -281,6 +315,76 @@ function consumeDiscardedResources(match, step) {
     addResources(bank, step);
 }
 
+function consumeYearOfPlenty(match) {
+    addResources(players.get(match[1]), match[2]);
+    removeResources(bank, match[2]);
+}
+
+function consumeMonopoly(match) {
+    let lumber = 0, brick = 0, wool = 0, grain = 0, ore = 0;
+    let count = 1 * match[2];
+    switch(match[3]) {
+        case 'lumber':
+            lumber = count;
+            players.forEach((player) => {
+                if (player.name !== match[1]) {
+                    player.modifyResource(-player.lumber, 0, 0, 0, 0, 0);
+                }
+            });
+            break;
+        case 'brick':
+            brick = count;
+            players.forEach((player) => {
+                if (player.name !== match[1]) {
+                    player.modifyResource(0, -player.brick, 0, 0, 0, 0);
+                }
+            });
+            break;
+        case 'wool':
+            wool = count;
+            players.forEach((player) => {
+                if (player.name !== match[1]) {
+                    player.modifyResource(0, 0, -player.wool, 0, 0, 0);
+                }
+            });
+            break;
+        case 'grain':
+            grain = count;
+            players.forEach((player) => {
+                if (player.name !== match[1]) {
+                    player.modifyResource(0, 0, 0, -player.grain, 0, 0);
+                }
+            });
+            break;
+        case 'ore':
+            ore = count;
+            players.forEach((player) => {
+                if (player.name !== match[1]) {
+                    player.modifyResource(0, 0, 0, 0, -player.ore, 0);
+                }
+            });
+            break;
+    }
+    players.get(match[1]).modifyResource(lumber, brick, wool, grain, ore, 0);
+}
+
+function consumeUsedDevCard(match) {
+    switch (match[2]) {
+        case 'Knight':
+            devCards.knight--;
+            break;
+        case 'Road Building':
+            devCards.roadBuilding--;
+            break;
+        case 'Year of Plenty':
+            devCards.yearOfPlenty--;
+            break;
+        case 'Monopoly':
+            devCards.monopoly--;
+            break;
+    }
+}
+
 function getResourceCounts(step) {
     let resources = [...step.matchAll(/lumber|brick|wool|grain|ore/g)];
     let lumber = 0, brick = 0, wool = 0, grain = 0, ore = 0;
@@ -305,4 +409,37 @@ function getResourceCounts(step) {
     }
 
     return [lumber, brick, wool, grain, ore];
+}
+
+function demystifyResourceCards() {
+    if (bank.lumber === MAX_RESOURCE_COUNT) {
+        player1.modifyResource(-player1.lumber, 0, 0, 0, 0, player1.lumber);
+        player2.modifyResource(-player2.lumber, 0, 0, 0, 0, player2.lumber);
+        player3.modifyResource(-player3.lumber, 0, 0, 0, 0, player3.lumber);
+        player4.modifyResource(-player4.lumber, 0, 0, 0, 0, player4.lumber);
+    }
+    if (bank.brick === MAX_RESOURCE_COUNT) {
+        player1.modifyResource(0, -player1.brick, 0, 0, 0, player1.brick);
+        player2.modifyResource(0, -player2.brick, 0, 0, 0, player2.brick);
+        player3.modifyResource(0, -player3.brick, 0, 0, 0, player3.brick);
+        player4.modifyResource(0, -player4.brick, 0, 0, 0, player4.brick);
+    }
+    if (bank.wool === MAX_RESOURCE_COUNT) {
+        player1.modifyResource(0, 0, -player1.wool, 0, 0, player1.wool);
+        player2.modifyResource(0, 0, -player2.wool, 0, 0, player2.wool);
+        player3.modifyResource(0, 0, -player3.wool, 0, 0, player3.wool);
+        player4.modifyResource(0, 0, -player4.wool, 0, 0, player4.wool);
+    }
+    if (bank.grain === MAX_RESOURCE_COUNT) {
+        player1.modifyResource(0, 0, 0, -player1.grain, 0, player1.grain);
+        player2.modifyResource(0, 0, 0, -player2.grain, 0, player2.grain);
+        player3.modifyResource(0, 0, 0, -player3.grain, 0, player3.grain);
+        player4.modifyResource(0, 0, 0, -player4.grain, 0, player4.grain);
+    }
+    if (bank.ore === MAX_RESOURCE_COUNT) {
+        player1.modifyResource(0, 0, 0, 0, -player1.ore, player1.ore);
+        player2.modifyResource(0, 0, 0, 0, -player2.ore, player2.ore);
+        player3.modifyResource(0, 0, 0, 0, -player3.ore, player3.ore);
+        player4.modifyResource(0, 0, 0, 0, -player4.ore, player4.ore);
+    }
 }

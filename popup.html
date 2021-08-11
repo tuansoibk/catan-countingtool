@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <div><span id="warning">Warning</span></div>
     <button id="reinit">Init</button>
     <button id="reload">Reload</button>
     <script src="popup.js"></script>
@@ -121,6 +122,9 @@
         <h3>Dev cards</h3>
       </div>
       <div class="bank">
+        <div class="devcard devcard-remaining">
+          <span class="remaining">Remaining</span><span class="counter" id="remaining-devcard">0</span>
+        </div>
         <div class="devcard">
           <span><img src="/images/card_knight.svg"></span><span class="counter" id="knight">14</span>
         </div>
@@ -135,6 +139,10 @@
         </div>
         <div class="devcard">
           <span><img src="/images/card_vp.svg"></span><span class="counter" id="vp">5</span>
+          <div class="edit-manual">
+            <div class="up" id="up-vp"></div>
+            <div class="down" id="down-vp"></div>
+          </div>
         </div>
       </div>
     </div>

@@ -18,28 +18,7 @@ export class Player {
         this.grain += grain;
         this.ore += ore;
         this.myth += myth;
-        if (this.myth === 1) {
-            if (this.lumber === -1) {
-                this.myth = 0;
-                this.lumber = 0;
-            }
-            else if (this.brick === -1) {
-                this.myth = 0;
-                this.brick = 0;
-            }
-            else if (this.wool === -1) {
-                this.myth = 0;
-                this.wool = 0;
-            }
-            else if (this.grain === -1) {
-                this.myth = 0;
-                this.grain = 0;
-            }
-            else if (this.ore === -1) {
-                this.myth = 0;
-                this.ore = 0;
-            }
-        }
+        this.#demystify();
         this.updateTotalResources();
     }
 
@@ -48,5 +27,60 @@ export class Player {
         if (this.totalResources === 0) {
             this.lumber = this.brick = this.wool = this.grain = this.ore = this.myth = 0;
         }
+    }
+
+    #demystify() {
+        if (this.lumber < 0) {
+            this.myth += this.lumber;
+            this.lumber = 0;
+        }
+        if (this.brick < 0) {
+            this.myth += this.brick;
+            this.brick = 0;
+        }
+        if (this.wool < 0) {
+            this.myth += this.wool;
+            this.wool = 0;
+        }
+        if (this.grain < 0) {
+            this.myth += this.grain;
+            this.grain = 0;
+        }
+        if (this.ore < 0) {
+            this.myth += this.ore;
+            this.ore = 0;
+        }
+
+        if ((this.lumber + this.myth) === this.totalResources) {
+            this.lumber += this.myth;
+            this.myth = 0;
+        }
+        if ((this.brick + this.myth) === this.totalResources) {
+            this.brick += this.myth;
+            this.myth = 0;
+        }
+        if ((this.wool + this.myth) === this.totalResources) {
+            this.wool += this.myth;
+            this.myth = 0;
+        }
+        if ((this.grain + this.myth) === this.totalResources) {
+            this.grain += this.myth;
+            this.myth = 0;
+        }
+        if ((this.ore + this.myth) === this.totalResources) {
+            this.ore += this.myth;
+            this.myth = 0;
+        }
+    }
+}
+
+export class DevCardDeck {
+    constructor() {
+        this.knight = 14;
+        this.roadBuilding = 2;
+        this.yearOfPlenty = 2;
+        this.monopoly = 2;
+        this.victoryPoint = 5;
+        this.remainingCards = 25;
     }
 }

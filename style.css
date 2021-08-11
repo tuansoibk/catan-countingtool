@@ -23,12 +23,12 @@ button.current {
   flex-direction: column;
 }
 
-.player,.bank {
+.player, .bank {
   display: flex;
   flex-direction: row;
 }
 
-.resource {
+.resource, .devcard {
   width: 80px;
   display: flex;
   flex-direction: row;
@@ -51,6 +51,47 @@ img {
   border-color: black;
 }
 
+.devcard-remaining {
+  height: 30px;
+  border: solid 1px;
+  border-color: black;
+  padding-right: 7px;
+}
+
 .total {
   padding-right: 7px;
+}
+
+.remaining {
+  padding-right: 7px;
+}
+
+.edit-manual {
+  display: flex;
+  flex-direction: column;
+  width: 10px;
+  padding-left: 4px;
+}
+
+.up {
+  background-image: url("images/up.png");
+  height: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 2px;
+}
+
+.down {
+  background-image: url("images/down.png");
+  height: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 2px;
+}
+
+#warning {
+  color: orange;
+  display: none;
 }

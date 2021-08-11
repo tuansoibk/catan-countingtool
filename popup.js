@@ -1,35 +1,70 @@
-let reinit = document.getElementById("reinit");
-let reload = document.getElementById("reload");
-
-reinit.addEventListener('click', async () => {
-    chrome.runtime.sendMessage({
-        message: 'reinit'
-        },
-        function (response) {
-            console.log('reinit response = ' + response.result);
-        }
-    );
-});
-
-reload.addEventListener("click", async () => {
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-    chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        function: reloadPlaySteps,
-    });
-});
-
-function init() {
+document.addEventListener("DOMContentLoaded", function (event) {
     reloadPlayerData();
-}
+    initEvents();
+});
 
-init();
+function initEvents() {
+    let reinit = document.getElementById('reinit');
+    reinit.addEventListener('click', async () => {
+        chrome.runtime.sendMessage({
+            message: 'reinit'
+            },
+            function (response) {
+                console.log('reinit response = ' + response.result);
+                if (response.result === 'success') {
+                    reloadPlayerData();
+                }
+            }
+        );
+    });
+
+    let reload = document.getElementById('reload');
+    reload.addEventListener('click', async () => {
+        document.getElementById('warning').style.display = 'none';
+
+        let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            function: reloadPlaySteps,
+        });
+    });
+
+    let upVp = document.getElementById('up-vp');
+    upVp.addEventListener('click', async () => {
+        chrome.storage.local.get(['devCards' ], (result) => {
+            if (result.devCards.victoryPoint < 5) {
+                result.devCards.victoryPoint++;
+                chrome.storage.local.set({ 'devCards': result.devCards });
+                document.getElementById('vp').textContent = result.devCards.victoryPoint; 
+            }
+        });
+    });
+
+    let downVp = document.getElementById('down-vp');
+    downVp.addEventListener('click', async () => {
+        chrome.storage.local.get(['devCards' ], (result) => {
+            if (result.devCards.victoryPoint > 0) {
+                result.devCards.victoryPoint--;
+                chrome.storage.local.set({ 'devCards': result.devCards });
+                document.getElementById('vp').textContent = result.devCards.victoryPoint; 
+            }
+        });
+    });
+}
 
 // The body of this function will be executed as a content script inside the
 // current page
 function reloadPlaySteps() {
     chrome.storage.local.get(['messageHashes'], (result) => {
+        if (!result.messageHashes) {
+            console.warn('Failed to fetch data from local storage, click \'Init\' then click \'Reload\' to fix this');
+            chrome.runtime.sendMessage(
+                {
+                    message: 'fetch data failed'
+                }
+            );
+            return;
+        }
         let hashString = function (content) {
             var hash = 0;
             if (content.length == 0) {
@@ -90,20 +125,24 @@ function reloadPlaySteps() {
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         console.log(sender.tab ?
-            "from a content script:" + sender.tab.url :
-            "from the extension");
+            'from a content script:' + sender.tab.url :
+            'from the extension');
         console.log('request = ' + request);
-        if (request.message === "players update") {
+        if (request.message === 'counting update') {
             reloadPlayerData();
         }
-        sendResponse({ result: "success" });
+        else if (request.messages === 'fetch data failed') {
+            document.getElementById('warning').style.display = 'block';
+            document.getElementById('warning').textContent = 'Failed to fetch data from local storage, click \'Init\' then click \'Reload\' to fix this';
+        }
+        sendResponse({ result: 'success' });
 
         return true;
     }
 );
 
 function reloadPlayerData() {
-    chrome.storage.local.get(['player1', 'player2', 'player3', 'bank'], (result) => {
+    chrome.storage.local.get(['player1', 'player2', 'player3', 'bank', 'devCards' ], (result) => {
         // player 1
         let titlePlayer1Ele = document.getElementById('title-player-1');
         titlePlayer1Ele.innerText = result.player1.name;
@@ -146,5 +185,13 @@ function reloadPlayerData() {
         document.getElementById('wool-bank').textContent = result.bank.wool;
         document.getElementById('grain-bank').textContent = result.bank.grain;
         document.getElementById('ore-bank').textContent = result.bank.ore;
+
+        // dev cards
+        document.getElementById('knight').textContent = result.devCards.knight;
+        document.getElementById('road').textContent = result.devCards.roadBuilding;
+        document.getElementById('plenty').textContent = result.devCards.yearOfPlenty;
+        document.getElementById('mono').textContent = result.devCards.monopoly;
+        document.getElementById('vp').textContent = result.devCards.victoryPoint;
+        document.getElementById('remaining-devcard').textContent = result.devCards.remainingCards;
     });
 }
