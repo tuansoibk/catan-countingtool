@@ -5,7 +5,7 @@ const ROAD_COST = 'lumber brick';
 const CITY_COST = 'grain grain ore ore ore';
 const DEV_CARD_COST = 'wool grain ore';
 const MAX_RESOURCE_COUNT = 19;
-const MY_PLAYER_NAME = 'maximusbk';
+let myPlayerName = 'player';
 let player1 = undefined;
 let player2 = undefined;
 let player3 = undefined;
@@ -30,6 +30,9 @@ function init() {
     chrome.storage.local.set({ 'bank': bank });
     chrome.storage.local.set({ 'devCards' : devCards });
     chrome.storage.local.set({ 'messageHashes': [] });
+    chrome.storage.sync.get(['myPlayerName'], (result) => {
+        myPlayerName = result.myPlayerName;
+    });
     console.log('Game model initiated');
 }
 
@@ -66,89 +69,8 @@ function consumeNewSteps() {
         for (let i = 0; i < newSteps.length; i++) {
             let step = newSteps[i];
             console.log(step);
+            consumeStep(step);
             debugPlayers();
-
-            let match = /(\w+)\s*?placed a settlement_(\S+)/.exec(step);
-            if (match != null && players.size < 4) {
-                consumeNewPlayer(match);
-                continue;
-            }
-            
-            match = /(\w+)\s*?received starting resources/.exec(step);
-            if (match != null) {
-                consumeResources(match, step);
-                continue;
-            }
-
-            match = /(\w+)\s*?got:/.exec(step);
-            if (match != null) {
-                consumeResources(match, step);
-                continue;
-            }
-
-            match = /(\w+)\s*?built a settlement/.exec(step);
-            if (match != null) {
-                consumeSettlement(match);
-                continue;
-            }
-            match = /(\w+)\s*?built a road/.exec(step);
-            if (match != null) {
-                consumeRoad(match);
-                continue;
-            }
-            match = /(\w+)\s*?built a city/.exec(step);
-            if (match != null) {
-                consumeCity(match);
-                continue;
-            }
-
-            match = /(\w+)\s*?bought devcard/.exec(step);
-            if (match != null) {
-                consumeDevCard(match);
-                continue;
-            }
-
-            match = /(\w+)\s*?traded:\s*?(.+)\s*?for:\s*?(.+)\s*?with:\s*?(\w+)/.exec(step);
-            if (match != null) {
-                consumeTrade(match);
-                continue;
-            }
-
-            match = /(\w+)\s*?gave bank:\s*?(.+)\s*?and took\s*?(.+)/.exec(step);
-            if (match != null) {
-                consumeBankTrade(match);
-                continue;
-            }
-
-            match = /(\w+)\s*?stole.*?(lumber|brick|wool|grain|ore|myth)\s*?from:*\s*?(\w+)/.exec(step);
-            if (match != null) {
-                consumeRobbery(match);
-                continue;
-            }
-
-            match = /(\w+)\s*?discarded:/.exec(step);
-            if (match != null) {
-                consumeDiscardedResources(match, step);
-                continue;
-            }
-
-            match = /(\w+)\s*?took from bank:\s*?(.+)/.exec(step);
-            if (match != null) {
-                consumeYearOfPlenty(match);
-                continue;
-            }
-
-            match = /(\w+)\s*?stole (\d+): (lumber|brick|wool|grain|ore)/.exec(step);
-            if (match != null) {
-                consumeMonopoly(match);
-                continue;
-            }
-
-            match = /(\w+)\s*?used\s*?(Knight|Road Building|Year of Plenty|Monopoly)/.exec(step);
-            if (match != null) {
-                consumeUsedDevCard(match);
-                continue;
-            }
         }
         demystifyResourceCards();
         debugPlayers();
@@ -174,6 +96,90 @@ function consumeNewSteps() {
             }
         );
     });
+}
+
+function consumeStep(step) {
+    let match = /(\w+)\s*?placed a settlement_(\S+)/.exec(step);
+    if (match != null && players.size < 4) {
+        consumeNewPlayer(match);
+        return;
+    }
+    
+    match = /(\w+)\s*?received starting resources/.exec(step);
+    if (match != null) {
+        consumeResources(match, step);
+        return;
+    }
+
+    match = /(\w+)\s*?got:/.exec(step);
+    if (match != null) {
+        consumeResources(match, step);
+        return;
+    }
+
+    match = /(\w+)\s*?built a settlement/.exec(step);
+    if (match != null) {
+        consumeSettlement(match);
+        return;
+    }
+    match = /(\w+)\s*?built a road/.exec(step);
+    if (match != null) {
+        consumeRoad(match);
+        return;
+    }
+    match = /(\w+)\s*?built a city/.exec(step);
+    if (match != null) {
+        consumeCity(match);
+        return;
+    }
+
+    match = /(\w+)\s*?bought devcard/.exec(step);
+    if (match != null) {
+        consumeDevCard(match);
+        return;
+    }
+
+    match = /(\w+)\s*?traded:\s*?(.+)\s*?for:\s*?(.+)\s*?with:\s*?(\w+)/.exec(step);
+    if (match != null) {
+        consumeTrade(match);
+        return;
+    }
+
+    match = /(\w+)\s*?gave bank:\s*?(.+)\s*?and took\s*?(.+)/.exec(step);
+    if (match != null) {
+        consumeBankTrade(match);
+        return;
+    }
+
+    match = /(\w+)\s*?stole.*?(lumber|brick|wool|grain|ore|myth)\s*?from:*\s*?(\w+)/.exec(step);
+    if (match != null) {
+        consumeRobbery(match);
+        return;
+    }
+
+    match = /(\w+)\s*?discarded:/.exec(step);
+    if (match != null) {
+        consumeDiscardedResources(match, step);
+        return;
+    }
+
+    match = /(\w+)\s*?took from bank:\s*?(.+)/.exec(step);
+    if (match != null) {
+        consumeYearOfPlenty(match);
+        return;
+    }
+
+    match = /(\w+)\s*?stole (\d+): (lumber|brick|wool|grain|ore)/.exec(step);
+    if (match != null) {
+        consumeMonopoly(match);
+        return;
+    }
+
+    match = /(\w+)\s*?used\s*?(Knight|Road Building|Year of Plenty|Monopoly)/.exec(step);
+    if (match != null) {
+        consumeUsedDevCard(match);
+        return;
+    }
 }
 
 function debugPlayers() {
@@ -216,19 +222,19 @@ function rearrangePlayers() {
     let temp2 = player2;
     let temp3 = player3;
     let temp4 = player4;
-    if (player1.name === MY_PLAYER_NAME) {
+    if (player1.name === myPlayerName) {
         temp1 = player2;
         temp2 = player3;
         temp3 = player4;
         temp4 = player1;
     }
-    else if (player2.name === MY_PLAYER_NAME) {
+    else if (player2.name === myPlayerName) {
         temp1 = player3;
         temp2 = player4;
         temp3 = player1;
         temp4 = player2;
     }
-    else if (player3.name === MY_PLAYER_NAME) {
+    else if (player3.name === myPlayerName) {
         temp1 = player4;
         temp2 = player1;
         temp3 = player2;

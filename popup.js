@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     reloadPlayerData();
     initEvents();
+    chrome.storage.sync.get(['myPlayerName'], (result) => {
+        document.getElementById('player-name').value = result.myPlayerName;
+    });
 });
 
 function initEvents() {
     let reinit = document.getElementById('reinit');
     reinit.addEventListener('click', async () => {
+        chrome.storage.sync.set({'myPlayerName': document.getElementById('player-name').value});
         chrome.runtime.sendMessage({
             message: 'reinit'
             },

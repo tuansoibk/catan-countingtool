@@ -5,10 +5,11 @@ This counting tool help to reveal the number of resource cards that all players 
 ![Screenshot](images/screenshot.png)
 
 ## Usage
-* Install the extension in Chrome
+* Install the extension in Chrome (load unpacked, see [Chrome extension - Getting started](https://developer.chrome.com/docs/extensions/mv3/getstarted/#manifest))
 * Go to a game with other players
-* Open the extension at any time and click 'Reload', the extension will show all players' cards in it popup window
-* Click 'Reload' again to fetch for latest update (the extension does not poll for resource changes)
+* Open the extension and enter your player name into the player name input box (only need to do for the first time)
+* Click 'Reload', the extension will show all players' cards in its popup window
+* Open the extension at any time and click 'Reload' again to fetch for latest update (the extension does not poll for resource changes)
 * If you go for another game, click 'Init' to reset all the countings
 
 ## Feature
@@ -30,6 +31,8 @@ This counting tool help to reveal the number of resource cards that all players 
 * It only works if you aren't disconnected from the game for any moment (see 'How it works')
 * It cannot count the number of 'Victory Point' cards in your hand (as well as your opponents), so use the manual up/down button to update the count if you know a VP has been bought.
 * It will not work in spectating mode
+* When a player use 'Monopoly', card counting is incorrect if any of the player having 'myth' cards, cards stole from (or be stolen by) other player (not you)
+* Sometimes the 'Reload' button just doesn't work, in such case, click 'Init' then click 'Reload' again
 
 ## How it works
 * The tool read a list of game logs from the web page while you're playing and do the counting base on that. Therefore, it is impossible to do the correct counting if any log is missing (when you are disconnected).

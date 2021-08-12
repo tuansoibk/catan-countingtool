@@ -18,18 +18,21 @@ export class Player {
         this.grain += grain;
         this.ore += ore;
         this.myth += myth;
-        this.#demystify();
         this.updateTotalResources();
+        this.#demystify();
     }
 
     updateTotalResources() {
         this.totalResources = this.lumber + this.brick + this.wool + this.grain + this.ore + this.myth;
-        if (this.totalResources === 0) {
-            this.lumber = this.brick = this.wool = this.grain = this.ore = this.myth = 0;
-        }
     }
 
     #demystify() {
+        // if total resource = 0 --> clear all countings
+        if (this.totalResources === 0) {
+            this.lumber = this.brick = this.wool = this.grain = this.ore = this.myth = 0;
+        }
+
+        // if any resource count is negative, deduct it from myth
         if (this.lumber < 0) {
             this.myth += this.lumber;
             this.lumber = 0;
@@ -51,25 +54,28 @@ export class Player {
             this.ore = 0;
         }
 
-        if ((this.lumber + this.myth) === this.totalResources) {
-            this.lumber += this.myth;
-            this.myth = 0;
-        }
-        if ((this.brick + this.myth) === this.totalResources) {
-            this.brick += this.myth;
-            this.myth = 0;
-        }
-        if ((this.wool + this.myth) === this.totalResources) {
-            this.wool += this.myth;
-            this.myth = 0;
-        }
-        if ((this.grain + this.myth) === this.totalResources) {
-            this.grain += this.myth;
-            this.myth = 0;
-        }
-        if ((this.ore + this.myth) === this.totalResources) {
-            this.ore += this.myth;
-            this.myth = 0;
+        // if there is only one single resource type, robbed card must be that resource type 
+        if (this.myth < 0) {
+            if ((this.lumber + this.myth) === this.totalResources) {
+                this.lumber += this.myth;
+                this.myth = 0;
+            }
+            if ((this.brick + this.myth) === this.totalResources) {
+                this.brick += this.myth;
+                this.myth = 0;
+            }
+            if ((this.wool + this.myth) === this.totalResources) {
+                this.wool += this.myth;
+                this.myth = 0;
+            }
+            if ((this.grain + this.myth) === this.totalResources) {
+                this.grain += this.myth;
+                this.myth = 0;
+            }
+            if ((this.ore + this.myth) === this.totalResources) {
+                this.ore += this.myth;
+                this.myth = 0;
+            }
         }
     }
 }
