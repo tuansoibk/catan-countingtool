@@ -31,7 +31,7 @@ This counting tool help to reveal the number of resource cards that all players 
 * It only works if you aren't disconnected from the game for any moment (see 'How it works')
 * It cannot count the number of 'Victory Point' cards in your hand (as well as your opponents), so use the manual up/down button to update the count if you know a VP has been bought.
 * It will not work in spectating mode
-* When a player use 'Monopoly', card counting is incorrect if any of the player having 'myth' cards, cards stole from (or be stolen by) other player (not you)
+* When a player uses 'Monopoly', card counting is incorrect if any of the player having 'myth' cards, cards stole from (or be stolen by) other player (not you)
 * Sometimes the 'Reload' button just doesn't work, in such case, click 'Init' then click 'Reload' again
 
 ## How it works
