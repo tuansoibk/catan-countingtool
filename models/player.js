@@ -3,13 +3,21 @@ import { StolenCard } from "./stolen-card";
 
 export class PlayerHand {
     
-    constructor(name) {
+    constructor(name, color) {
         this.name = name;
+        this.color = color;
         this.lumber = ResourceCard.lumber(0);
         this.brick = ResourceCard.brick(0);
         this.wool = ResourceCard.wool(0);
         this.grain = ResourceCard.grain(0);
         this.ore = ResourceCard.ore(0);
+        this.resources = new Map ([
+            ['lumber', this.lumber],
+            ['brick', this.brick],
+            ['wool', this.wool],
+            ['grain', this.grain],
+            ['ore', this.ore]
+        ]);
         this.stole = [];
         this.stolen = [];
         this.totalResources = 0;
@@ -21,6 +29,11 @@ export class PlayerHand {
         this.wool.add(wool);
         this.grain.add(grain);
         this.ore.add(ore);
+        this.#countTotalResources();
+    }
+
+    addNamedResource(resourceName, count) {
+        this.resources.get(resourceName).count += count;
         this.#countTotalResources();
     }
 
@@ -39,6 +52,11 @@ export class PlayerHand {
         this.wool.remove(wool);
         this.grain.remove(grain);
         this.ore.remove(ore);
+        this.#countTotalResources();
+    }
+
+    removeNamedResource(resourceName, count) {
+        this.resources.get(resourceName).count -= count;
         this.#countTotalResources();
     }
 
@@ -61,7 +79,7 @@ export class PlayerHand {
             - this.stolen.length;
     }
 
-    stoleResource(playerHand, stepHash) {
+    stealResource(playerHand, stepHash) {
         let possibleResources = [playerHand.lumber, playerHand.brick, playerHand.wool, playerHand.grain, playerHand.ore];
         let stolenCard = new StolenCard(stepHash, possibleResources);
         this.stole.push(stolenCard);
