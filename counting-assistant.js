@@ -29,7 +29,7 @@ export class CountingAssistant {
             this.tradeWithBank,
             this.stealResource,
             this.discardResources,
-            this.receiveResourcesWithYearOfPlenty,
+            this.takeResourcesWithYearOfPlenty,
             this.stealResourcesWithMonopoly,
             this.useDevCard
         ];
@@ -324,37 +324,75 @@ export class CountingAssistant {
 
         let name1 = match[1];
         let name2 = match[3];
-        let stolenResource = match[2];
         let yourPlayer = this.orderedPlayerHands[this.orderedPlayerHands.length - 1];
+        let stepHash = this.#hash(steps[0]);
         if (name1 === 'You') {
-            yourPlayer.addResourcesFromText(stolenResource);
-            this.playerHands.get(name2).removeResourcesFromText(stolenResource);
+            yourPlayer.addNamedResource(match[2], 1);
+            if (this.playerHands.has(name2)) {
+                this.playerHands.get(name2).removeNamedResource(match[2], 1);
+            }
+            else {
+                console.warn('You steal from other: unrecognised player name: ' + name2);
+            }
         }
         else if (name2 === 'you') {
-            this.playerHands.get(name1).addResourcesFromText(stolenResource);
-            yourPlayer.removeResourcesFromText(stolenResource);
+            if (this.playerHands.has(name1)) {
+                this.playerHands.get(name1).addNamedResource(match[2], 1);
+            }
+            else {
+                console.warn('Other steals from you: unrecognised player name: ' + name1);
+            }
+            yourPlayer.removeNamedResource(match[2], 1);
         }
         else {
-            this.playerHands.get(name1).stealResource(this.playerHands.get(name2), this.#hash(steps[0]));
+            if (this.playerHands.has(name1) && this.playerHands.has(name2)) {
+                this.playerHands.get(name1).stealResource(this.playerHands.get(name2), stepHash);
+            }
+            else if (!this.playerHands.has(name1)) {
+                console.warn('Steal resources: unrecognised stealing player name: ' + name1);
+            }
+            else {
+                console.warn('Steal resources: unrecognised stolen player name: ' + name2);
+            }
         }
         
         return steps.slice(1);
     }
 
     discardResources(steps) {
-        let match = /(\w+)\s*?built a settlement/.exec(steps[0]);
+        let match = /(\w+)\s*?discarded:(.+)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
+
+        let name = match[1];
+        let resources = match[2];
+        if (this.playerHands.has(name)) {
+            this.playerHands.get(name).removeResourcesFromText(resources);
+        }
+        else {
+            console.warn('Discard resources: unrecognised player name: ' + name);
+        }
+        this.bank.addResourcesFromText(resources);
         
         return steps.slice(1);
     }
 
-    receiveResourcesWithYearOfPlenty(steps) {
-        let match = /(\w+)\s*?built a settlement/.exec(steps[0]);
+    takeResourcesWithYearOfPlenty(steps) {
+        let match = /(\w+)\s*?took from bank:\s*?(.+)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
+
+        let name = match[1];
+        let resources = match[2];
+        if (this.playerHands.has(name)) {
+            this.playerHands.get(name).addResourcesFromText(resources);
+        }
+        else {
+            console.warn('Year of Plenty: unrecognised player name: ' + name);
+        }
+        this.bank.removeResourcesFromText(resources);
         
         return steps.slice(1);
     }

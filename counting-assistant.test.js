@@ -330,13 +330,13 @@ test('player can steal from another', () => {
     let stolenCard = underTest.playerHands.get('Marcie').stole[0];
     expect(stolenCard.possibleResources.length).toBe(4);
     expect(stolenCard.possibleResources[0].name).toBe('lumber');
-    expect(stolenCard.possibleResources[0].count).toBe('1');
+    expect(stolenCard.possibleResources[0].count).toBe(1);
     expect(stolenCard.possibleResources[1].name).toBe('brick');
-    expect(stolenCard.possibleResources[1].count).toBe('2');
+    expect(stolenCard.possibleResources[1].count).toBe(2);
     expect(stolenCard.possibleResources[2].name).toBe('wool');
-    expect(stolenCard.possibleResources[2].count).toBe('3');
+    expect(stolenCard.possibleResources[2].count).toBe(3);
     expect(stolenCard.possibleResources[3].name).toBe('grain');
-    expect(stolenCard.possibleResources[3].count).toBe('4');
+    expect(stolenCard.possibleResources[3].count).toBe(4);
     expect(stolenCard.totalResourceBeforeStolen).toBe(10);
     expect(underTest.playerHands.get('Hagai').totalResources).toBe(9);
     expect(underTest.playerHands.get('Hagai').stolen.length).toBe(1);
@@ -346,7 +346,8 @@ test('player can steal from another', () => {
 test('player can steal from your player', () => {
     // given
     setup4Players();
-    let step = 'Marcie stole brick from: you';
+    underTest.playerHands.get('Elly').addResources(0, 1, 0, 0, 0);
+    let step = 'Marcie stole: brick from you';
 
     // when
     underTest.stealResource([step]);
@@ -355,26 +356,60 @@ test('player can steal from your player', () => {
     expect(underTest.playerHands.get('Marcie').totalResources).toBe(1);
     expect(underTest.playerHands.get('Marcie').brick.count).toBe(1);
     expect(underTest.playerHands.get('Marcie').stole.length).toBe(0);
-    expect(underTest.playerHands.get('Elly').totalResources).toBe(-1);
-    expect(underTest.playerHands.get('Elly').brick.count).toBe(-1);
+    expect(underTest.playerHands.get('Elly').totalResources).toBe(0);
+    expect(underTest.playerHands.get('Elly').brick.count).toBe(0);
     expect(underTest.playerHands.get('Elly').stolen.length).toBe(0);
 });
 
 test('your player can steal from another player', () => {
     // given
     setup4Players();
-    let step = 'You stole brick from: Marcie';
+    underTest.playerHands.get('Marcie').addResources(0, 1, 0, 0, 0);
+    let step = 'You stole: brick from: Marcie';
 
     // when
     underTest.stealResource([step]);
 
     // then
-    expect(underTest.playerHands.get('Marcie').totalResources).toBe(-1);
-    expect(underTest.playerHands.get('Marcie').brick.count).toBe(-1);
+    expect(underTest.playerHands.get('Marcie').totalResources).toBe(0);
+    expect(underTest.playerHands.get('Marcie').brick.count).toBe(0);
     expect(underTest.playerHands.get('Marcie').stole.length).toBe(0);
     expect(underTest.playerHands.get('Elly').totalResources).toBe(1);
     expect(underTest.playerHands.get('Elly').brick.count).toBe(1);
     expect(underTest.playerHands.get('Elly').stolen.length).toBe(0);
+});
+
+test('player discards resource on rolling 7', () => {
+    // given
+    setup4Players();
+    underTest.playerHands.get('Marcie').addResources(3, 1, 2, 4, 5);
+    let step = 'Marcie discarded: lumber wool lumber lumber';
+
+    // when
+    underTest.discardResources([step]);
+
+    // then
+    expect(underTest.playerHands.get('Marcie').totalResources).toBe(11);
+    expect(underTest.playerHands.get('Marcie').lumber.count).toBe(0);
+    expect(underTest.playerHands.get('Marcie').wool.count).toBe(1);
+    expect(underTest.bank.lumber.count).toBe(22);
+    expect(underTest.bank.wool.count).toBe(20);
+});
+
+test('player can use Year of Plenty and take 2 resources from bank', () => {
+    // given
+    setup4Players();
+    let step = 'Marcie took from bank: brick  wool ';
+
+    // when
+    underTest.takeResourcesWithYearOfPlenty([step]);
+
+    // then
+    expect(underTest.playerHands.get('Marcie').totalResources).toBe(2);
+    expect(underTest.playerHands.get('Marcie').brick.count).toBe(1);
+    expect(underTest.playerHands.get('Marcie').wool.count).toBe(1);
+    expect(underTest.bank.brick.count).toBe(18);
+    expect(underTest.bank.wool.count).toBe(18);
 });
 
 test('integration test: can calculate given all game steps', () => {
@@ -407,7 +442,8 @@ function setup4Players() {
         'Hagai placed a settlement_blue',
         'Schwab placed a settlement_orange',
         'Elly placed a settlement_black',
-        'Marcie placed a settlement_red'
+        'Marcie placed a settlement_red',
+        'Marcie received starting resources: '
     ];
     underTest.calculate(steps);
 }

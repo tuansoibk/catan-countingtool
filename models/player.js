@@ -80,7 +80,12 @@ export class PlayerHand {
     }
 
     stealResource(playerHand, stepHash) {
-        let possibleResources = [playerHand.lumber, playerHand.brick, playerHand.wool, playerHand.grain, playerHand.ore];
+        let possibleResources = [];
+        for (let [resourceName, resource] of playerHand.resources) {
+            if (resource.count > 0) {
+                possibleResources.push(new ResourceCard(resourceName, resource.count));
+            }
+        }
         let stolenCard = new StolenCard(stepHash, possibleResources);
         this.stole.push(stolenCard);
         playerHand.stolen.push(stolenCard);
