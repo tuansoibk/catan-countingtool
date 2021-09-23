@@ -5,15 +5,17 @@ import { PlayerHand } from "./models/player";
 let underTest;
 
 beforeEach(() => {
+    // disable logging
+    console.log = function() {};
     underTest = new CountingAssistant();
 });
 
 test('new player is added on place settlement step', () => {
     // given
-    let step1 = 'Hagai placed a settlement_blue';
-    let step2 = 'Schwab placed a settlement_orange';
-    let step3 = 'Marcie placed a settlement_red';
-    let step4 = 'Elly placed a settlement_black';
+    const step1 = 'Hagai placed a settlement_blue';
+    const step2 = 'Schwab placed a settlement_orange';
+    const step3 = 'Marcie placed a settlement_red';
+    const step4 = 'Elly placed a settlement_black';
 
 
     // when
@@ -33,7 +35,7 @@ test('new player is added on place settlement step', () => {
 test('skip place settlement step if player has been added', () => {
     // given
     underTest.playerHands.set('Hagai', new PlayerHand('Hagai', 'blue'));
-    let step = 'Hagai placed a settlement_blue';
+    const step = 'Hagai placed a settlement_blue';
 
     // when
     underTest.placeSettlementOnSetup([step]);
@@ -46,7 +48,7 @@ test('skip place settlement step if player has been added', () => {
 test('players are arranged by their order based on given last player name', () => {
     // given
     setup4Players();
-    let step = 'Hagai received starting resources:  wool wool ore ';
+    const step = 'Hagai received starting resources:  wool wool ore ';
 
     // when
     underTest.takeStartingResources([step]);
@@ -62,15 +64,15 @@ test('players are arranged by their order based on given last player name', () =
 test('players are arranged by their order based on given last player name (2)', () => {
     // given
     underTest.lastPlayerName = 'Elly';
-    let step1 = 'Schwab placed a settlement_orange';
-    let step2 = 'Elly placed a settlement_black';
-    let step3 = 'Marcie placed a settlement_red';
-    let step4 = 'Hagai placed a settlement_blue';
+    const step1 = 'Schwab placed a settlement_orange';
+    const step2 = 'Elly placed a settlement_black';
+    const step3 = 'Marcie placed a settlement_red';
+    const step4 = 'Hagai placed a settlement_blue';
     underTest.placeSettlementOnSetup([step1]);
     underTest.placeSettlementOnSetup([step2]);
     underTest.placeSettlementOnSetup([step3]);
     underTest.placeSettlementOnSetup([step4]);
-    let step = 'Hagai received starting resources:  wool wool ore ';
+    const step = 'Hagai received starting resources:  wool wool ore ';
 
     // when
     underTest.takeStartingResources([step]);
@@ -86,17 +88,17 @@ test('players are arranged by their order based on given last player name (2)', 
 test('players are arranged by their order based on given last player name (5 players)', () => {
     // given
     underTest.lastPlayerName = 'Elly';
-    let step1 = 'Schwab placed a settlement_orange';
-    let step2 = 'Elly placed a settlement_black';
-    let step3 = 'Marcie placed a settlement_red';
-    let step4 = 'Hagai placed a settlement_blue';
-    let step5 = 'Dichy placed a settlement_green';
+    const step1 = 'Schwab placed a settlement_orange';
+    const step2 = 'Elly placed a settlement_black';
+    const step3 = 'Marcie placed a settlement_red';
+    const step4 = 'Hagai placed a settlement_blue';
+    const step5 = 'Dichy placed a settlement_green';
     underTest.placeSettlementOnSetup([step1]);
     underTest.placeSettlementOnSetup([step2]);
     underTest.placeSettlementOnSetup([step3]);
     underTest.placeSettlementOnSetup([step4]);
     underTest.placeSettlementOnSetup([step5]);
-    let step = 'Hagai received starting resources:  wool wool ore ';
+    const step = 'Hagai received starting resources:  wool wool ore ';
 
     // when
     underTest.takeStartingResources([step]);
@@ -150,7 +152,7 @@ test('player name with special characters', () => {
 test('player tooks starting resources', () => {
     // given
     underTest.playerHands.set('Hagai', new PlayerHand('Hagai', 'blue'));
-    let step = 'Hagai received starting resources:  wool wool ore ';
+    const step = 'Hagai received starting resources:  wool wool ore ';
 
     // when
     underTest.takeStartingResources([step]);
@@ -166,7 +168,7 @@ test('player tooks starting resources', () => {
 test('players took resources gained from one dice rolling', () => {
     // given
     setup4Players();
-    let steps = [
+    const steps = [
         'Elly got: grain ',
         'Marcie got: grain ',
         'Hagai got: ore',
@@ -194,7 +196,7 @@ test('players took resources gained from one dice rolling', () => {
 test('no player get any resources if two or more players over-produced a certain resource type', () => {
     // given
     setup4Players();
-    let steps = [
+    const steps = [
         'Elly got: grain grain grain',
         'Marcie got: grain ore',
         'Hagai got: ore',
@@ -223,7 +225,7 @@ test('no player get any resources if two or more players over-produced a certain
 test('a player get all remaining resources of certain type if only he can take it and he over-produces it', () => {
     // given
     setup4Players();
-    let steps = [
+    const steps = [
         'Elly got: grain grain grain',
         'Marcie got: ore',
         'Hagai got: ore',
@@ -252,7 +254,7 @@ test('a player get all remaining resources of certain type if only he can take i
 test('player built settlement', () => {
     // given
     setup4Players();
-    let step = 'Marcie built a settlement_red';
+    const step = 'Marcie built a settlement_red';
 
     // when
     underTest.buildSettlement([step]);
@@ -272,7 +274,7 @@ test('player built settlement', () => {
 test('player built road', () => {
     // given
     setup4Players();
-    let step = 'Marcie built a road_red';
+    const step = 'Marcie built a road_red';
 
     // when
     underTest.buildRoad([step]);
@@ -288,7 +290,7 @@ test('player built road', () => {
 test('player built city', () => {
     // given
     setup4Players();
-    let step = 'Marcie built a city_red';
+    const step = 'Marcie built a city_red';
 
     // when
     underTest.buildCity([step]);
@@ -304,7 +306,7 @@ test('player built city', () => {
 test('player bought dev card', () => {
     // given
     setup4Players();
-    let step = 'Marcie bought devcard';
+    const step = 'Marcie bought devcard';
 
     // when
     underTest.buyDevCard([step]);
@@ -322,7 +324,7 @@ test('player bought dev card', () => {
 test('one player traded with another', () => {
     // given
     setup4Players();
-    let step = 'Marcie traded:  wool wool for:  grain  with: Elly';
+    const step = 'Marcie traded:  wool wool for:  grain  with: Elly';
 
     // when
     underTest.tradeWithPlayer([step]);
@@ -339,7 +341,7 @@ test('one player traded with another', () => {
 test('player traded with bank', () => {
     // given
     setup4Players();
-    let step = 'Marcie gave bank:   grain grain grain grain  and took   brick';
+    const step = 'Marcie gave bank:   grain grain grain grain  and took   brick';
 
     // when
     underTest.tradeWithBank([step]);
@@ -356,7 +358,7 @@ test('one player stole from another', () => {
     // given
     setup4Players();
     underTest.playerHands.get('Hagai').addResources(1, 2, 3, 4, 0);
-    let step = 'Marcie stole myth from: Hagai';
+    const step = 'Marcie stole myth from: Hagai';
 
     // when
     underTest.stealResource([step]);
@@ -384,7 +386,7 @@ test('one player stole from another who has only one resource', () => {
     // given
     setup4Players();
     underTest.playerHands.get('Hagai').addResources(1, 0, 0, 0, 0);
-    let step = 'Marcie stole myth from: Hagai';
+    const step = 'Marcie stole myth from: Hagai';
 
     // when
     underTest.stealResource([step]);
@@ -401,8 +403,8 @@ test('one player stole from another who has only one card and it is a stealing c
     // given
     setup4Players();
     underTest.playerHands.get('Hagai').addResources(1, 2, 3, 4, 0);
-    let step1 = 'Marcie stole myth from: Hagai';
-    let step2 = 'Elly stole myth from: Marcie';
+    const step1 = 'Marcie stole myth from: Hagai';
+    const step2 = 'Elly stole myth from: Marcie';
 
     // when
     underTest.stealResource([step1]);
@@ -436,8 +438,8 @@ test('one player stole from another who has other resource cards and a stealing 
     setup4Players();
     underTest.playerHands.get('Marcie').addResources(1, 1, 1, 1, 1);
     underTest.playerHands.get('Hagai').addResources(1, 2, 3, 4, 0);
-    let step1 = 'Marcie stole myth from: Hagai';
-    let step2 = 'Elly stole myth from: Marcie';
+    const step1 = 'Marcie stole myth from: Hagai';
+    const step2 = 'Elly stole myth from: Marcie';
 
     // when
     underTest.stealResource([step1]);
@@ -473,7 +475,7 @@ test('another player stole from your player', () => {
     // given
     setup4Players();
     underTest.playerHands.get('Elly').addResources(0, 1, 0, 0, 0);
-    let step = 'Marcie stole: brick from you';
+    const step = 'Marcie stole: brick from you';
 
     // when
     underTest.stealResource([step]);
@@ -491,7 +493,7 @@ test('your player stole from another player', () => {
     // given
     setup4Players();
     underTest.playerHands.get('Marcie').addResources(0, 1, 0, 0, 0);
-    let step = 'You stole: brick from: Marcie';
+    const step = 'You stole: brick from: Marcie';
 
     // when
     underTest.stealResource([step]);
@@ -509,7 +511,7 @@ test('player discarded resource on rolling 7', () => {
     // given
     setup4Players();
     underTest.playerHands.get('Marcie').addResources(3, 1, 2, 4, 5);
-    let step = 'Marcie discarded: lumber wool lumber lumber';
+    const step = 'Marcie discarded: lumber wool lumber lumber';
 
     // when
     underTest.discardResources([step]);
@@ -525,7 +527,7 @@ test('player discarded resource on rolling 7', () => {
 test('player used Year of Plenty and take 2 resources from bank', () => {
     // given
     setup4Players();
-    let step = 'Marcie took from bank: brick  wool ';
+    const step = 'Marcie took from bank: brick  wool ';
 
     // when
     underTest.takeResourcesWithYearOfPlenty([step]);
@@ -545,7 +547,7 @@ test('player used Monopoly and stole all cards of a single resources from other 
     underTest.playerHands.get('Elly').addResources(2, 1, 1, 1, 1);
     underTest.playerHands.get('Hagai').addResources(3, 1, 1, 1, 1);
     underTest.playerHands.get('Schwab').addResources(1, 1, 1, 1, 1);
-    let step = 'Schwab stole 6: lumber ';
+    const step = 'Schwab stole 6: lumber ';
 
     // when
     underTest.stealResourcesWithMonopoly([step]);
@@ -561,15 +563,152 @@ test('player used Monopoly and stole all cards of a single resources from other 
     expect(underTest.playerHands.get('Hagai').lumber.count).toBe(0);
 });
 
+test('demistify the scenario when a player uses up a single resource while having one stealing card', () => {
+    // given
+    setup4Players();
+    underTest.playerHands.get('Marcie').addResources(1, 0, 1, 1, 1);
+    underTest.playerHands.get('Hagai').addResources(1, 1, 1, 1, 1);
+    const step1 = 'Marcie stole myth from: Hagai';
+    underTest.stealResource([step1]);
+    const step2 = 'Marcie built a settlement_red';
+    underTest.buildSettlement([step2]);
+
+    // when
+    const res = underTest.demistifyStealingCards();
+
+    // then
+    expect(res).toBeTruthy();
+    expect(underTest.playerHands.get('Marcie').totalResources).toBe(1);
+    expect(underTest.playerHands.get('Marcie').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Marcie').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Marcie').ore.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').totalResources).toBe(4);
+    expect(underTest.playerHands.get('Hagai').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Hagai').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Hagai').brick.count).toBe(0);
+});
+
+test('demistify the scenario when a player uses up 2 resources of same type while having 2 stealing cards', () => {
+    // given
+    setup4Players();
+    underTest.playerHands.get('Marcie').addResources(1, 1, 0, 2, 1);
+    underTest.playerHands.get('Hagai').addResources(1, 1, 1, 1, 1);
+    underTest.playerHands.get('Schwab').addResources(1, 1, 1, 1, 1);
+    const step1 = 'Marcie stole myth from: Hagai';
+    underTest.stealResource([step1]);
+    const step2 = 'Marcie stole myth from: Schwab';
+    underTest.stealResource([step2]);
+    const step3 = 'Marcie built a settlement_red';
+    underTest.buildSettlement([step3]);
+    const step4 = 'Marcie bought devcard';
+    underTest.buyDevCard([step4]);
+
+    // when
+    const res = underTest.demistifyStealingCards();
+
+    // then
+    expect(res).toBeTruthy();
+    expect(underTest.playerHands.get('Marcie').totalResources).toBe(0);
+    expect(underTest.playerHands.get('Marcie').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Marcie').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Hagai').totalResources).toBe(4);
+    expect(underTest.playerHands.get('Hagai').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Hagai').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Hagai').wool.count).toBe(0);
+    expect(underTest.playerHands.get('Schwab').totalResources).toBe(4);
+    expect(underTest.playerHands.get('Schwab').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Schwab').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Schwab').wool.count).toBe(0);
+});
+
+test('demistify the scenario when a player uses up a single resource while having one stealing card chained with another stealing card', () => {
+    // given
+    setup4Players();
+    underTest.playerHands.get('Marcie').addResources(1, 1, 0, 1, 1);
+    underTest.playerHands.get('Hagai').addResources(1, 1, 0, 1, 1);
+    underTest.playerHands.get('Schwab').addResources(1, 1, 1, 1, 1);
+    const step1 = 'Marcie stole myth from: Hagai';
+    underTest.stealResource([step1]);
+    const step2 = 'Hagai stole myth from: Schwab';
+    underTest.stealResource([step2]);
+    const step3 = 'Marcie built a settlement_red';
+    underTest.buildSettlement([step3]);
+
+    // when
+    const res = underTest.demistifyStealingCards();
+
+    // then
+    expect(res).toBeTruthy();
+    expect(underTest.playerHands.get('Marcie').totalResources).toBe(1);
+    expect(underTest.playerHands.get('Marcie').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Marcie').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Marcie').ore.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').totalResources).toBe(4);
+    expect(underTest.playerHands.get('Hagai').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Hagai').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Hagai').lumber.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').brick.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').wool.count).toBe(0);
+    expect(underTest.playerHands.get('Hagai').grain.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').ore.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').totalResources).toBe(4);
+    expect(underTest.playerHands.get('Schwab').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Schwab').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Schwab').lumber.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').brick.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').wool.count).toBe(0);
+    expect(underTest.playerHands.get('Schwab').grain.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').ore.count).toBe(1);
+});
+
+test('demistify the scenario when a player uses up a single resource while having 2 stealing cards, one of them cannot resolve to the used resource', () => {
+    // given
+    setup4Players();
+    underTest.playerHands.get('Marcie').addResources(1, 1, 0, 1, 1);
+    underTest.playerHands.get('Hagai').addResources(1, 1, 0, 1, 1);
+    underTest.playerHands.get('Schwab').addResources(1, 1, 1, 1, 1);
+    const step1 = 'Marcie stole myth from: Hagai';
+    underTest.stealResource([step1]);
+    const step2 = 'Marcie stole myth from: Schwab';
+    underTest.stealResource([step2]);
+    const step3 = 'Marcie built a settlement_red';
+    underTest.buildSettlement([step3]);
+
+    // when
+    const res = underTest.demistifyStealingCards();
+
+    // then
+    expect(res).toBeTruthy();
+    expect(underTest.playerHands.get('Marcie').totalResources).toBe(2);
+    expect(underTest.playerHands.get('Marcie').stealing.length).toBe(1);
+    let stolenCard = underTest.playerHands.get('Marcie').stealing[0];
+    expect(stolenCard.possibleResources.length).toBe(4);
+    expect(stolenCard.stolenFrom).toBe('Hagai');
+    expect(underTest.playerHands.get('Marcie').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Marcie').ore.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').totalResources).toBe(3);
+    expect(underTest.playerHands.get('Hagai').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Hagai').stolen.length).toBe(1);
+    expect(underTest.playerHands.get('Hagai').lumber.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').brick.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').wool.count).toBe(0);
+    expect(underTest.playerHands.get('Hagai').grain.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').ore.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').totalResources).toBe(4);
+    expect(underTest.playerHands.get('Schwab').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Schwab').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Schwab').wool.count).toBe(0);
+});
+
 test('integration test: can calculate given all game steps', () => {
     // given
     underTest.lastPlayerName = 'Elly';
-    let step1 = 'Hagai placed a settlement_blue';
-    let step2 = 'Schwab placed a settlement_orange';
-    let step3 = 'Elly placed a settlement_black';
-    let step4 = 'Marcie placed a settlement_red';
-    let step5 = 'Marcie placed a road_red';
-    let step6 = 'Hagai received starting resources:  wool wool ore ';
+    const step1 = 'Hagai placed a settlement_blue';
+    const step2 = 'Schwab placed a settlement_orange';
+    const step3 = 'Elly placed a settlement_black';
+    const step4 = 'Marcie placed a settlement_red';
+    const step5 = 'Marcie placed a road_red';
+    const step6 = 'Hagai received starting resources:  wool wool ore ';
 
     // when
     underTest.calculate([step1, step2, step3, step4, step5, step6]);
@@ -587,7 +726,7 @@ test('integration test: can calculate given all game steps', () => {
 
 function setup4Players() {
     underTest.lastPlayerName = 'Elly';
-    let steps = [
+    const steps = [
         'Hagai placed a settlement_blue',
         'Schwab placed a settlement_orange',
         'Elly placed a settlement_black',

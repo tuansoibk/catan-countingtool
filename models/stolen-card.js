@@ -1,7 +1,8 @@
 export class StolenCard {
     
-    constructor(stepHash, possibleResources) {
+    constructor(stepHash, stolenFrom, possibleResources) {
         this.stepHash = stepHash;
+        this.stolenFrom = stolenFrom;
         this.possibleResources = possibleResources;
         this.name = 'stolen';
         this.count = 1;
@@ -9,5 +10,6 @@ export class StolenCard {
         this.possibleResources.forEach(resource => {
             this.totalResourceBeforeStolen += resource.count;
         });
+        this.demistifiedResource = '';
     }
 }

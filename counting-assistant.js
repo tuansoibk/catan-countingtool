@@ -42,9 +42,14 @@ export class CountingAssistant {
     calculate(steps) {
         let stepsToCalc = steps.map((step, i) => `step ${i}: ${step}`);
         while (stepsToCalc.length !== 0) {
+            const stepsBeforeCalc = stepsToCalc.map(step => step);
             stepsToCalc = this.#calculateAndConsumeSteps(stepsToCalc);
+            console.log('Consumed steps:');
+            for (let i = 0; i < stepsBeforeCalc.length - stepsToCalc.length; i++) {
+                console.log(' - ' + stepsBeforeCalc[i]);
+            }
             this.#debug();
-            if (this.demistifyStolenCards()) {
+            if (this.demistifyStealingCards()) {
                 this.#debug();
             }
         }
@@ -432,12 +437,29 @@ export class CountingAssistant {
         return steps.slice(1);
     }
 
-    demistifyStolenCards() {
-        return false;
+    demistifyStealingCards() {
+        // iterate through each player and try to detect stealing cards that can be demistified
+        let toContinue;
+        let demistified = false;
+        do {
+            toContinue = false;
+            let res = false;
+            for (const player of this.orderedPlayerHands) {
+                if (player.stealing.length > 0) {
+                    res |= player.demistifyStealingCards(this.orderedPlayerHands);
+                }
+            }
+            demistified |= res;
+            toContinue = res;
+        } while (toContinue); // if a stealing card is demistified, repeat the same steps to dimistified chained stealing cards
+
+        return demistified;
     }
 
     #debug() {
-
+        for (const player of this.orderedPlayerHands) {
+            console.log(JSON.stringify(player));
+        }
     }
 
     #hash(content) {
