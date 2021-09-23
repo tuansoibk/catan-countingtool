@@ -18,7 +18,7 @@ export class PlayerHand {
             ['grain', this.grain],
             ['ore', this.ore]
         ]);
-        this.stole = [];
+        this.stealing = [];
         this.stolen = [];
         this.totalResources = 0;
     }
@@ -75,21 +75,117 @@ export class PlayerHand {
             + this.wool.count
             + this.grain.count
             + this.ore.count
-            + this.stole.length
+            + this.stealing.length
             - this.stolen.length;
     }
 
+    #hasOnlylumber() {
+        return this.lumber.count > 0 &&
+            this.lumber.count == this.totalResources &&
+            this.brick.count == 0 &&
+            this.wool.count == 0 &&
+            this.grain.count == 0 &&
+            this.ore.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #hasOnlyBrick() {
+        return this.brick.count > 0 &&
+            this.brick.count == this.totalResources &&
+            this.lumber.count == 0 &&
+            this.wool.count == 0 &&
+            this.grain.count == 0 &&
+            this.ore.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #hasOnlyWool() {
+        return this.wool.count > 0 &&
+            this.wool.count == this.totalResources &&
+            this.lumber.count == 0 &&
+            this.brick.count == 0 &&
+            this.grain.count == 0 &&
+            this.ore.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #hasOnlyGrain() {
+        return this.grain.count > 0 &&
+            this.grain.count == this.totalResources &&
+            this.lumber.count == 0 &&
+            this.brick.count == 0 &&
+            this.wool.count == 0 &&
+            this.ore.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #hasOnlyOre() {
+        return this.ore.count > 0 &&
+            this.ore.count == this.totalResources &&
+            this.lumber.count == 0 &&
+            this.brick.count == 0 &&
+            this.wool.count == 0 &&
+            this.grain.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #hasOnlyOneStealingCard() {
+        return this.totalResources == 1 &&
+            this.stealing.length == 1 &&
+            this.lumber.count == 0 &&
+            this.brick.count == 0 &&
+            this.wool.count == 0 &&
+            this.grain.count == 0 &&
+            this.ore.count == 0;
+    }
+
     stealResource(playerHand, stepHash) {
-        let possibleResources = [];
-        for (let [resourceName, resource] of playerHand.resources) {
-            if (resource.count > 0) {
-                possibleResources.push(new ResourceCard(resourceName, resource.count));
-            }
+        // there are few cases:
+        // - being stolen player has a single type of resource
+        // - being stolen player has just a single card, and it is a stealing card
+        // - other cases
+
+        if (playerHand.#hasOnlylumber()) {
+            playerHand.removeNamedResource('lumber', 1);
+            this.addNamedResource('lumber', 1);
         }
-        let stolenCard = new StolenCard(stepHash, possibleResources);
-        this.stole.push(stolenCard);
-        playerHand.stolen.push(stolenCard);
-        this.#countTotalResources();
-        playerHand.#countTotalResources();
+        else if (playerHand.#hasOnlyBrick()) {
+            playerHand.removeNamedResource('brick', 1);
+            this.addNamedResource('brick', 1);
+        }
+        else if (playerHand.#hasOnlyWool()) {
+            playerHand.removeNamedResource('wool', 1);
+            this.addNamedResource('wool', 1);
+        }
+        else if (playerHand.#hasOnlyGrain()) {
+            playerHand.removeNamedResource('grain', 1);
+            this.addNamedResource('grain', 1);
+        }
+        else if (playerHand.#hasOnlyOre()) {
+            playerHand.removeNamedResource('ore', 1);
+            this.addNamedResource('ore', 1);
+        }
+        else if (playerHand.#hasOnlyOneStealingCard()) {
+            const stolenCard = playerHand.stealing.pop();
+            playerHand.#countTotalResources();
+            this.stealing.push(stolenCard);
+            this.#countTotalResources();
+        }
+        else {
+            let possibleResources = [];
+            for (let [resourceName, resource] of playerHand.resources) {
+                if (resource.count > 0) {
+                    possibleResources.push(new ResourceCard(resourceName, resource.count));
+                }
+            }
+            for (let stealingResource of playerHand.stealing) {
+                possibleResources.push(stealingResource);
+            }
+            let stolenCard = new StolenCard(stepHash, possibleResources);
+            this.stealing.push(stolenCard);
+            playerHand.stolen.push(stolenCard);
+            this.#countTotalResources();
+            playerHand.#countTotalResources();
+        }
     }
 }

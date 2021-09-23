@@ -1,0 +1,53 @@
+Player nam with # and number
+
+Jorge#5032 placed a settlement_red
+Jorge#5032 placed a road_red
+maximusbk placed a settlement_orange
+maximusbk placed a road_orange
+kra7os placed a settlement_black
+kra7os placed a road_black
+daflame94 placed a settlement_green
+daflame94 placed a road_green
+daflame94 placed a settlement_green
+daflame94 placed a road_green
+daflame94 received starting resources:  lumber brick ore 
+kra7os placed a settlement_black
+kra7os placed a road_black
+kra7os received starting resources:  wool ore wool 
+maximusbk placed a settlement_orange
+maximusbk placed a road_orange
+maximusbk received starting resources:  brick lumber 
+Jorge#5032 placed a settlement_red
+Jorge#5032 placed a road_red
+Jorge#5032 received starting resources:  grain lumber brick 
+Jorge#5032 rolled: 6 4
+maximusbk got: brick 
+Jorge#5032 got: brick 
+kra7os got: lumber 
+Jorge#5032 built a road_red
+maximusbk rolled: 2 1
+maximusbk got: ore 
+Jorge#5032 got: grain 
+kra7os got: ore 
+maximusbk built a road_orange
+kra7os rolled: 1 4
+daflame94 got: wool 
+Jorge#5032 got: ore 
+kra7os got: wool 
+daflame94 rolled: 4 3
+daflame94 moved robber :  10 brick 
+daflame94 stole:  brick  from you
+daflame94 built a road_green
+Jorge#5032 rolled: 3 4
+Jorge#5032 moved robber :  6 grain 
+Jorge#5032 stole:  ore  from you
+maximusbk rolled: 6 4
+maximusbk got: brick 
+Jorge#5032 got: brick 
+kra7os got: lumber 
+kra7os rolled: 3 1
+daflame94 got: ore grain 
+maximusbk got: grain 
+kra7os wants to give:  wool  for:  brick 
+kra7os wants to give:  ore  for:  brick 
+kra7os traded:  ore for:  brick  with: Jorge#5032

@@ -1,0 +1,611 @@
+Player name with number
+
+​ Info/Help at our <a href="https://discord.gg/uzCKAWV6qm" target="_blank">Discord</a>
+​ Karma System: Active. Leavers will receive a karma penalty
+​ <hr>
+​ Guatemala placed a settlement_green
+​ new player: Guatemala, color: green
+​ Guatemala placed a road_green
+​ <hr>
+​ ElClauPower placed a settlement_red
+​ new player: ElClauPower, color: red
+​ ElClauPower placed a road_red
+​ <hr>
+​ maximusbk placed a settlement_black
+​ new player: maximusbk, color: black
+​ maximusbk placed a road_black
+​ <hr>
+​ Lorena7300 placed a settlement_orange
+​ new player: Lorena7300, color: orange
+​ Lorena7300 placed a road_orange
+​ <hr>
+​ Lorena7300 placed a settlement_orange
+​ Lorena7300 placed a road_orange
+​ Lorena7300 received starting resources:  brick grain wool 
+​ <hr>
+​ maximusbk placed a settlement_black
+​ maximusbk placed a road_black
+​ maximusbk received starting resources:  wool lumber wool 
+​ <hr>
+​ ElClauPower placed a settlement_red
+​ ElClauPower placed a road_red
+​ ElClauPower received starting resources:  grain wool 
+​ <hr>
+​ Guatemala placed a settlement_green
+​ Guatemala placed a road_green
+​ Guatemala received starting resources:  lumber lumber brick 
+​ <hr>
+​ Guatemala rolled: 3 5
+​ Guatemala got: wool 
+​ ElClauPower got: ore wool 
+​ Guatemala built a road_green
+​ <hr>
+​ ElClauPower rolled: 4 6
+​ Lorena7300 got: wool 
+​ maximusbk got: wool 
+​ ElClauPower got: wool 
+​ <hr>
+​ maximusbk rolled: 3 4
+​ maximusbk moved robber :  5 grain 
+​ You stole:  grain  from: Lorena7300
+​ <hr>
+​ Lorena7300 rolled: 4 2
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ Lorena7300 built a road_orange
+​ <hr>
+​ Guatemala rolled: 5 3
+​ Guatemala got: wool 
+​ ElClauPower got: ore wool 
+​ <hr>
+​ ElClauPower rolled: 5 5
+​ Lorena7300 got: wool 
+​ maximusbk got: wool 
+​ ElClauPower got: wool 
+​ ElClauPower gave bank:   wool wool wool wool  and took   brick 
+​ <hr>
+​ maximusbk rolled: 5 6
+​ Lorena7300 got: ore 
+​ <hr>
+​ Lorena7300 rolled: 4 2
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ Lorena7300 wants to give:  wool  for:  grain 
+​ <hr>
+​ Guatemala rolled: 6 3
+​ maximusbk got: wool grain 
+​ <hr>
+​ ElClauPower rolled: 2 4
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ <hr>
+​ maximusbk rolled: 5 1
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ maximusbk gave bank:   wool wool wool wool  and took   lumber 
+​ Lorena7300 bought devcard
+​ <hr>
+​ Guatemala rolled: 4 5
+​ maximusbk got: wool grain grain 
+​ Guatemala gave bank:   lumber lumber lumber lumber  and took   ore 
+​ <hr>
+​ ElClauPower rolled: 2 4
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ ElClauPower wants to give Lorena7300 &amp; maximusbk :  wool  for:  lumber 
+​ Lorena7300 wants to give ElClauPower :  lumber  for:  brick 
+​ ElClauPower wants to give Lorena7300 &amp; maximusbk :  ore  for:  lumber 
+​ ElClauPower bought devcard
+​ <hr>
+​ maximusbk rolled: 4 3
+​ maximusbk moved robber :  8 wool 
+​ ElClauPower has started spectating!
+​ You stole:  wool  from: ElClauPower
+​ <hr>
+​ Lorena7300 rolled: 1 1
+​ Lorena7300 got: brick 
+​ Lorena7300 used Knight 
+​ ElClauPower stopped spectating
+​ Lorena7300 moved robber :  9 grain 
+​ Lorena7300 stole:  brick  from you
+​ Lorena7300 built a road_orange
+​ Lorena7300 built a road_orange
+​ <hr>
+​ Guatemala rolled: 2 1
+​ Lorena7300 got: grain 
+​ maximusbk got: ore 
+​ Guatemala got: grain 
+​ Guatemala bought devcard
+​ <hr>
+​ ElClauPower rolled: 2 5
+​ ElClauPower moved robber :  3 ore 
+​ ElClauPower stole:  wool  from you
+​ <hr>
+​ maximusbk rolled: 6 2
+​ Guatemala got: wool 
+​ ElClauPower got: ore wool 
+​ maximusbk bought devcard
+​ <hr>
+​ Lorena7300 rolled: 4 6
+​ Lorena7300 got: wool 
+​ maximusbk got: wool 
+​ ElClauPower got: wool 
+​ Lorena7300 wants to give maximusbk &amp; ElClauPower :  wool  for:  brick 
+​ <hr>
+​ Guatemala rolled: 6 6
+​ Guatemala got: brick 
+​ Guatemala built a road_green
+​ ElClauPower has started spectating!
+​ <hr>
+​ ElClauPower rolled: 5 5
+​ Lorena7300 got: wool 
+​ maximusbk got: wool 
+​ ElClauPower got: wool 
+​ ElClauPower stopped spectating
+​ ElClauPower gave bank:   wool wool wool wool  and took   lumber 
+​ ElClauPower has started spectating!
+​ ElClauPower built a road_red
+​ <hr>
+​ maximusbk used Knight 
+​ maximusbk moved robber :  5 grain 
+​ You stole:  ore  from: ElClauPower
+​ maximusbk rolled: 1 2
+​ Lorena7300 got: grain 
+​ maximusbk got: ore 
+​ Guatemala got: grain 
+​ ElClauPower stopped spectating
+​ <hr>
+​ Lorena7300 rolled: 1 4
+​ maximusbk got: lumber 
+​ Guatemala got: lumber 
+​ Lorena7300 wants to give maximusbk &amp; ElClauPower :  wool  for:  brick 
+​ Lorena7300 wants to give maximusbk &amp; ElClauPower :  grain  for:  brick 
+​ ElClauPower has left the game, giving them 2 minutes to reconnect.
+​ ElClauPower has disconnected. Bot will wait until next turn to give ElClauPower a chance to reconnect.
+​ <hr>
+​ ElClauPower has reconnected!
+​ Guatemala rolled: 6 4
+​ Lorena7300 got: wool 
+​ maximusbk got: wool 
+​ ElClauPower got: wool 
+​ Guatemala used Monopoly 
+​ Guatemala stole 9: wool 
+​ Guatemala gave bank:   wool wool wool wool  and took   ore 
+​ Guatemala bought devcard
+​ Guatemala gave bank:   wool wool wool wool  and took   brick 
+​ <hr>
+​ ElClauPower rolled: 4 3
+​ ElClauPower moved robber :  6 lumber 
+​ ElClauPower stole  myth from: Guatemala
+​ <hr>
+​ maximusbk rolled: 6 1
+​ maximusbk moved robber :  5 grain 
+​ You stole:  lumber  from: Lorena7300
+​ maximusbk built a road_black
+​ <hr>
+​ Lorena7300 rolled: 1 2
+​ Lorena7300 got: grain 
+​ maximusbk got: ore 
+​ Guatemala got: grain 
+​ <hr>
+​ Guatemala used Knight 
+​ Guatemala moved robber :  9 grain 
+​ Guatemala stole:  lumber  from you
+​ Guatemala rolled: 3 6
+​ maximusbk got: wool 
+​ Guatemala built a settlement_green: +1 VP
+​ <hr>
+​ ElClauPower rolled: 4 6
+​ Lorena7300 got: wool 
+​ maximusbk got: wool 
+​ ElClauPower got: wool 
+​ <hr>
+​ maximusbk rolled: 5 6
+​ Lorena7300 got: ore 
+​ maximusbk got: lumber 
+​ maximusbk wants to give Lorena7300 &amp; ElClauPower :  lumber wool  for:  grain 
+​ maximusbk bought devcard
+​ <hr>
+​ Lorena7300 rolled: 3 1
+​ maximusbk got: lumber 
+​ Guatemala got: grain grain 
+​ ElClauPower got: lumber 
+​ Lorena7300 bought devcard
+​ <hr>
+​ maximusbk rolled: 2 1
+​ Lorena7300 got: grain 
+​ maximusbk got: ore 
+​ Guatemala got: grain 
+​ maximusbk wants to give Lorena7300 &amp; ElClauPower :  ore  for:  grain 
+​ <hr>
+​ Lorena7300 rolled: 5 4
+​ maximusbk got: wool 
+​ <hr>
+​ Guatemala rolled: 5 6
+​ Lorena7300 got: ore 
+​ maximusbk got: lumber 
+​ Guatemala wants to give:  grain  for:  lumber 
+​ Guatemala ended an embargo against Lorena7300
+​ Guatemala ended an embargo against maximusbk
+​ Guatemala ended an embargo against ElClauPower
+​ Guatemala traded:  grain for:  lumber  with: maximusbk
+​ Guatemala gave bank:   lumber lumber lumber lumber  and took   ore 
+​ Guatemala bought devcard
+​ <hr>
+​ ElClauPower rolled: 2 3
+​ Lorena7300 got: grain 
+​ maximusbk got: lumber 
+​ Guatemala got: lumber 
+​ ElClauPower got: grain 
+​ <hr>
+​ maximusbk rolled: 6 1
+​ maximusbk discarding resource cards
+​ maximusbk discarded: lumber lumber wool ore ore 
+​ maximusbk moved robber :  5 grain 
+​ You stole:  wool  from: ElClauPower
+​ maximusbk used Year of Plenty 
+​ maximusbk took from bank: brick  brick 
+​ maximusbk built a road_black
+​ maximusbk received <img src="../dist/images/icon_longest_road.svg?v114" alt="longest road" height="20" width="20" class="lobby-chat-text-icon">: +2 VPs
+​ maximusbk built a settlement_black: +1 VP
+​ <hr>
+​ Lorena7300 rolled: 2 1
+​ Lorena7300 got: grain 
+​ maximusbk got: ore ore 
+​ Guatemala got: grain 
+​ Lorena7300 gave bank:   grain grain grain grain  and took   wool 
+​ Lorena7300 bought devcard
+​ <hr>
+​ Guatemala used Knight 
+​ Guatemala moved robber :  9 grain 
+​ Guatemala stole:  ore  from you
+​ Guatemala rolled: 6 5
+​ Lorena7300 got: ore 
+​ maximusbk got: lumber 
+​ Guatemala bought devcard
+​ <hr>
+​ ElClauPower rolled: 5 1
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ <hr>
+​ maximusbk rolled: 1 5
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ maximusbk built a road_black
+​ <hr>
+​ Lorena7300 rolled: 1 6
+​ Lorena7300 moved robber :  8 ore 
+​ Lorena7300 stole:  ore  from you
+​ Lorena7300 used Road Building 
+​ Lorena7300 placed a road_orange
+​ Lorena7300 placed a road_orange
+​ <img src="../dist/images/icon_longest_road.svg?v114" alt="longest road" height="20" width="20" class="lobby-chat-text-icon"> has passed from: maximusbk to: Lorena7300
+​ <hr>
+​ Guatemala used Knight 
+​ Guatemala received <img src="../dist/images/icon_largest_army.svg?v114" alt="largest army" height="20" width="20" class="lobby-chat-text-icon">: +2 VPs
+​ Guatemala moved robber :  9 grain 
+​ Guatemala stole:  brick  from you
+​ Guatemala rolled: 4 4
+​ maximusbk got: ore 
+​ Guatemala got: wool 
+​ ElClauPower got: ore wool 
+​ <hr>
+​ ElClauPower rolled: 6 6
+​ Guatemala got: brick 
+​ ElClauPower bought devcard
+​ <hr>
+​ maximusbk rolled: 1 3
+​ maximusbk got: lumber 
+​ Guatemala got: grain grain 
+​ ElClauPower got: lumber 
+​ maximusbk wants to give:  ore  for:  grain 
+​ <hr>
+​ Lorena7300 rolled: 1 6
+​ Guatemala discarding resource cards
+​ Guatemala discarded: lumber lumber grain grain 
+​ Lorena7300 moved robber :  8 wool 
+​ Lorena7300 stole  myth from: Guatemala
+​ <hr>
+​ Guatemala rolled: 1 6
+​ Guatemala moved robber :  9 grain 
+​ Guatemala stole:  lumber  from you
+​ <hr>
+​ ElClauPower rolled: 5 4
+​ maximusbk got: wool 
+​ <hr>
+​ Lorena7300 has left the game, giving them 2 minutes to reconnect.
+​ Lorena7300 has disconnected. Bot will wait until next turn to give Lorena7300 a chance to reconnect.
+​ maximusbk rolled: 4 2
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ <hr>
+​ Lorena7300 rolled: 6 3
+​ maximusbk got: wool 
+​ Lorena7300 wants to give:  lumber  for:  ore 
+​ Guatemala started an embargo against Lorena7300
+​ ElClauPower started an embargo against Lorena7300
+​ <hr>
+​ Guatemala rolled: 5 3
+​ maximusbk got: ore 
+​ Guatemala got: wool 
+​ ElClauPower got: ore wool 
+​ <hr>
+​ ElClauPower rolled: 2 4
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ ElClauPower wants to give:  wool  for:  brick 
+​ ElClauPower wants to give:  lumber  for:  brick 
+​ ElClauPower used Year of Plenty 
+​ ElClauPower took from bank: brick  grain 
+​ ElClauPower built a settlement_red: +1 VP
+​ <hr>
+​ maximusbk rolled: 6 1
+​ Lorena7300, maximusbk and  Guatemala discarding resource cards
+​ Bot is selecting cards to discard for Lorena7300
+​ Lorena7300 discarded: lumber lumber lumber lumber 
+​ maximusbk discarded: brick wool wool ore 
+​ Guatemala discarded: lumber lumber wool wool 
+​ maximusbk moved robber :  8 wool 
+​ You stole:  brick  from: Guatemala
+​ <hr>
+​ Lorena7300 rolled: 4 4
+​ maximusbk got: ore 
+​ ElClauPower got: ore ore 
+​ Lorena7300 wants to give maximusbk :  grain  for:  wool 
+​ <hr>
+​ Guatemala rolled: 6 4
+​ Lorena7300 got: wool 
+​ maximusbk got: wool 
+​ ElClauPower got: wool 
+​ Guatemala built a road_green
+​ <hr>
+​ ElClauPower rolled: 3 1
+​ maximusbk got: lumber 
+​ Guatemala got: grain grain 
+​ ElClauPower got: lumber 
+​ ElClauPower gave bank:   ore ore ore ore  and took   brick 
+​ ElClauPower built a road_red
+​ <hr>
+​ maximusbk rolled: 1 1
+​ Lorena7300 got: brick 
+​ maximusbk wants to give:  ore  for:  grain 
+​ maximusbk traded:  ore for:  grain  with: Guatemala
+​ maximusbk built a settlement_black: +1 VP
+​ <hr>
+​ Lorena7300 rolled: 3 1
+​ maximusbk got: lumber 
+​ Guatemala got: grain grain 
+​ ElClauPower got: lumber 
+​ Lorena7300 wants to give maximusbk :  wool  for:  ore 
+​ <hr>
+​ Guatemala rolled: 6 2
+​ maximusbk got: ore 
+​ ElClauPower got: ore ore 
+​ Guatemala wants to give:  grain grain  for:  wool 
+​ <hr>
+​ ElClauPower rolled: 5 2
+​ Guatemala started a vote to disable karma
+​ Bot is selecting where to place  for ElClauPower
+​ ElClauPower moved robber :  6 lumber 
+​ ElClauPower stole  myth from: Guatemala
+​ ElClauPower bought devcard
+​ <hr>
+​ maximusbk rolled: 3 4
+​ maximusbk moved robber :  5 grain 
+​ You stole:  ore  from: Lorena7300
+​ Karma System: vote to disable karma declined
+​ <hr>
+​ Lorena7300 rolled: 4 4
+​ maximusbk got: ore 
+​ Guatemala got: wool 
+​ ElClauPower got: ore ore wool 
+​ <hr>
+​ Guatemala rolled: 6 6
+​ Guatemala got: brick 
+​ Guatemala built a road_green
+​ Guatemala bought devcard
+​ <hr>
+​ ElClauPower used Knight 
+​ ElClauPower moved robber :  9 grain 
+​ ElClauPower stole:  wool  from you
+​ ElClauPower rolled: 6 3
+​ maximusbk got: wool 
+​ ElClauPower gave bank:   ore ore ore ore  and took   brick 
+​ <hr>
+​ maximusbk rolled: 4 5
+​ maximusbk got: wool 
+​ maximusbk gave bank:   ore ore ore  and took   grain 
+​ maximusbk bought devcard
+​ <hr>
+​ Lorena7300 rolled: 1 1
+​ Lorena7300 got: brick 
+​ <hr>
+​ Guatemala rolled: 6 1
+​ Guatemala moved robber :  5 grain 
+​ Guatemala stole  myth from: Lorena7300
+​ <hr>
+​ ElClauPower rolled: 4 4
+​ maximusbk got: ore 
+​ Guatemala got: wool 
+​ ElClauPower got: ore ore wool 
+​ ElClauPower gave bank:   wool wool wool wool  and took   grain 
+​ <hr>
+​ maximusbk rolled: 1 3
+​ maximusbk got: lumber 
+​ Guatemala got: grain grain 
+​ ElClauPower got: lumber 
+​ <hr>
+​ Lorena7300 rolled: 1 1
+​ Lorena7300 got: brick 
+​ <hr>
+​ Guatemala rolled: 6 5
+​ Lorena7300 got: ore 
+​ maximusbk got: lumber 
+​ Guatemala wants to give:  grain grain grain  for:  lumber brick 
+​ <hr>
+​ ElClauPower rolled: 3 2
+​ maximusbk got: lumber 
+​ Guatemala got: lumber 
+​ ElClauPower wants to give:  ore  for:  wool 
+​ ElClauPower wants to give:  lumber  for:  wool 
+​ maximusbk started an embargo against Lorena7300
+​ maximusbk ended an embargo against Lorena7300
+​ maximusbk started an embargo against Lorena7300
+​ ElClauPower built a road_red
+​ <hr>
+​ maximusbk rolled: 1 4
+​ maximusbk got: lumber 
+​ Guatemala got: lumber 
+​ maximusbk gave bank:   lumber lumber lumber  and took   ore 
+​ maximusbk used Monopoly 
+​ maximusbk stole 6: grain 
+​ maximusbk built a city_black: +1 VP
+​ maximusbk gave bank:   grain grain grain  and took   ore 
+​ maximusbk bought devcard
+​ <hr>
+​ Lorena7300 rolled: 4 2
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ Lorena7300 built a road_orange
+​ <hr>
+​ Guatemala rolled: 5 3
+​ maximusbk got: ore 
+​ Guatemala got: wool 
+​ ElClauPower got: ore ore wool 
+​ <hr>
+​ ElClauPower rolled: 2 1
+​ Lorena7300 got: grain 
+​ maximusbk got: ore ore 
+​ Guatemala got: grain 
+​ ElClauPower gave bank:   ore ore ore ore  and took   brick 
+​ <hr>
+​ maximusbk rolled: 1 6
+​ maximusbk moved robber :  11 ore 
+​ You stole:  brick  from: Lorena7300
+​ maximusbk built a road_black
+​ maximusbk built a road_black
+​ <hr>
+​ Lorena7300 rolled: 2 6
+​ maximusbk got: ore 
+​ Guatemala got: wool 
+​ ElClauPower got: ore ore wool 
+​ <hr>
+​ Guatemala rolled: 6 4
+​ Lorena7300 got: wool 
+​ maximusbk got: wool wool wool 
+​ ElClauPower got: wool 
+​ Guatemala wants to give:  lumber lumber wool wool  for:  brick 
+​ Guatemala traded:  lumber lumber wool wool for:  brick  with: maximusbk
+​ Guatemala built a settlement_green: +1 VP
+​ <hr>
+​ ElClauPower rolled: 3 4
+​ maximusbk and  ElClauPower discarding resource cards
+​ maximusbk discarded: lumber wool wool wool wool 
+​ ElClauPower discarded: lumber wool wool ore 
+​ ElClauPower moved robber :  9 grain 
+​ ElClauPower stole:  lumber  from you
+​ <hr>
+​ maximusbk used Knight 
+​ maximusbk moved robber :  10 wool 
+​ You stole:  brick  from: Lorena7300
+​ maximusbk rolled: 5 1
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ <hr>
+​ Lorena7300 rolled: 4 3
+​ Lorena7300 moved robber :  8 wool 
+​ Lorena7300 stole  myth from: Guatemala
+​ Lorena7300 bought devcard
+​ <hr>
+​ Guatemala rolled: 6 1
+​ Guatemala moved robber :  9 grain 
+​ Guatemala stole:  wool  from you
+​ <hr>
+​ ElClauPower rolled: 4 1
+​ Lorena7300 got: grain 
+​ maximusbk got: lumber lumber 
+​ Guatemala got: lumber 
+​ ElClauPower got: grain 
+​ ElClauPower used Road Building 
+​ ElClauPower placed a road_red
+​ ElClauPower placed a road_red
+​ ElClauPower built a settlement_red: +1 VP
+​ <hr>
+​ maximusbk rolled: 5 4
+​ maximusbk got: wool wool 
+​ maximusbk built a road_black
+​ <img src="../dist/images/icon_longest_road.svg?v114" alt="longest road" height="20" width="20" class="lobby-chat-text-icon"> has passed from: Lorena7300 to: maximusbk
+​ maximusbk built a road_black
+​ maximusbk gave bank:   ore ore ore  and took   grain 
+​ maximusbk bought devcard
+​ <hr>
+​ Lorena7300 rolled: 5 1
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ ElClauPower got: brick 
+​ Lorena7300 used Knight 
+​ Lorena7300 moved robber :  8 ore 
+​ Lorena7300 stole:  wool  from you
+​ Lorena7300 bought devcard
+​ <hr>
+​ Guatemala rolled: 1 1
+​ Lorena7300 got: brick 
+​ ElClauPower got: brick 
+​ <hr>
+​ ElClauPower rolled: 3 6
+​ maximusbk got: wool wool grain grain 
+​ Guatemala has left the game, giving them 2 minutes to reconnect.
+​ Guatemala has disconnected. Bot will wait until next turn to give Guatemala a chance to reconnect.
+​ <hr>
+​ maximusbk used Knight 
+​ maximusbk moved robber :  11 ore 
+​ You stole:  wool  from: Guatemala
+​ maximusbk rolled: 6 1
+​ maximusbk moved robber :  3 grain 
+​ You stole:  lumber  from: Guatemala
+​ maximusbk built a settlement_black: +1 VP
+​ <hr>
+​ Lorena7300 rolled: 5 1
+​ Lorena7300 got: lumber 
+​ maximusbk got: brick 
+​ Guatemala got: lumber 
+​ ElClauPower got: brick 
+​ <hr>
+​ Guatemala rolled: 1 4
+​ Lorena7300 got: grain 
+​ maximusbk got: lumber lumber 
+​ Guatemala got: lumber 
+​ ElClauPower got: grain 
+​ Half or more of the players left. Karma has been disabled.
+​ Karma System: You can leave the game freely without a karma penalty
+​ <hr>
+​ ElClauPower rolled: 1 3
+​ maximusbk got: lumber 
+​ Guatemala got: grain grain grain 
+​ ElClauPower got: lumber 
+​ ElClauPower built a road_red
+​ ElClauPower built a road_red
+​ <hr>
+​ maximusbk rolled: 2 6
+​ maximusbk got: ore 
+​ Guatemala got: wool 
+​ ElClauPower got: ore ore wool 
+​ maximusbk bought devcard
+​ maximusbk built a road_black
+​ <hr>
+​ Lorena7300 rolled: 6 1
+​ Lorena7300 moved robber :  8 ore 
+​ Lorena7300 stole:  lumber  from you
+​ Lorena7300 built a settlement_orange: +1 VP

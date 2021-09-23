@@ -99,83 +99,83 @@ function consumeNewSteps() {
 }
 
 function consumeStep(step) {
-    let match = /(\w+)\s*?placed a settlement_(\S+)/.exec(step);
+    let match = /([\w#]+)\s*?placed a settlement_(\S+)/.exec(step);
     if (match != null && players.size < 4) {
         consumeNewPlayer(match);
         return;
     }
     
-    match = /(\w+)\s*?received starting resources/.exec(step);
+    match = /([\w#]+)\s*?received starting resources/.exec(step);
     if (match != null) {
         consumeResources(match, step);
         return;
     }
 
-    match = /(\w+)\s*?got:/.exec(step);
+    match = /([\w#]+)\s*?got:/.exec(step);
     if (match != null) {
         consumeResources(match, step);
         return;
     }
 
-    match = /(\w+)\s*?built a settlement/.exec(step);
+    match = /([\w#]+)\s*?built a settlement/.exec(step);
     if (match != null) {
         consumeSettlement(match);
         return;
     }
-    match = /(\w+)\s*?built a road/.exec(step);
+    match = /([\w#]+)\s*?built a road/.exec(step);
     if (match != null) {
         consumeRoad(match);
         return;
     }
-    match = /(\w+)\s*?built a city/.exec(step);
+    match = /([\w#]+)\s*?built a city/.exec(step);
     if (match != null) {
         consumeCity(match);
         return;
     }
 
-    match = /(\w+)\s*?bought devcard/.exec(step);
+    match = /([\w#]+)\s*?bought devcard/.exec(step);
     if (match != null) {
         consumeDevCard(match);
         return;
     }
 
-    match = /(\w+)\s*?traded:\s*?(.+)\s*?for:\s*?(.+)\s*?with:\s*?(\w+)/.exec(step);
+    match = /([\w#]+)\s*?traded:\s*?(.+)\s*?for:\s*?(.+)\s*?with:\s*?([\w#]+)/.exec(step);
     if (match != null) {
         consumeTrade(match);
         return;
     }
 
-    match = /(\w+)\s*?gave bank:\s*?(.+)\s*?and took\s*?(.+)/.exec(step);
+    match = /([\w#]+)\s*?gave bank:\s*?(.+)\s*?and took\s*?(.+)/.exec(step);
     if (match != null) {
         consumeBankTrade(match);
         return;
     }
 
-    match = /(\w+)\s*?stole.*?(lumber|brick|wool|grain|ore|myth)\s*?from:*\s*?(\w+)/.exec(step);
+    match = /([\w#]+)\s*?stole.*?(lumber|brick|wool|grain|ore|myth)\s*?from:*\s*?([\w#]+)/.exec(step);
     if (match != null) {
         consumeRobbery(match);
         return;
     }
 
-    match = /(\w+)\s*?discarded:/.exec(step);
+    match = /([\w#]+)\s*?discarded:/.exec(step);
     if (match != null) {
         consumeDiscardedResources(match, step);
         return;
     }
 
-    match = /(\w+)\s*?took from bank:\s*?(.+)/.exec(step);
+    match = /([\w#]+)\s*?took from bank:\s*?(.+)/.exec(step);
     if (match != null) {
         consumeYearOfPlenty(match);
         return;
     }
 
-    match = /(\w+)\s*?stole (\d+): (lumber|brick|wool|grain|ore)/.exec(step);
+    match = /([\w#]+)\s*?stole (\d+): (lumber|brick|wool|grain|ore)/.exec(step);
     if (match != null) {
         consumeMonopoly(match);
         return;
     }
 
-    match = /(\w+)\s*?used\s*?(Knight|Road Building|Year of Plenty|Monopoly)/.exec(step);
+    match = /([\w#]+)\s*?used\s*?(Knight|Road Building|Year of Plenty|Monopoly)/.exec(step);
     if (match != null) {
         consumeUsedDevCard(match);
         return;

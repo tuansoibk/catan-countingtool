@@ -65,14 +65,14 @@ test('can stole from another', () => {
     anotherPlayer.addResources(1, 2, 3, 4, 5);
 
     // when
-    underTest.stoleResource(anotherPlayer, '1234');
+    underTest.stealResource(anotherPlayer, '1234');
 
     // then
-    expect(underTest.stole.length).toBe(1);
+    expect(underTest.stealing.length).toBe(1);
     expect(underTest.totalResources).toBe(1);
     expect(anotherPlayer.stolen.length).toBe(1);
     expect(anotherPlayer.totalResources).toBe(14);
-    let stolenCard = underTest.stole[0];
+    let stolenCard = underTest.stealing[0];
     expect(stolenCard.totalResourceBeforeStolen).toBe(15);
     expect(stolenCard.possibleResources[0].count).toBe(1);
     expect(stolenCard.possibleResources[1].count).toBe(2);

@@ -40,11 +40,13 @@ export class CountingAssistant {
      * @param {array of all game steps} steps 
      */
     calculate(steps) {
-        while (steps.length !== 0) {
-            steps = this.#calculateAndConsumeSteps(steps);
+        let stepsToCalc = steps.map((step, i) => `step ${i}: ${step}`);
+        while (stepsToCalc.length !== 0) {
+            stepsToCalc = this.#calculateAndConsumeSteps(stepsToCalc);
             this.#debug();
-            this.demistifyStolenCards();
-            this.#debug();
+            if (this.demistifyStolenCards()) {
+                this.#debug();
+            }
         }
     }
 
@@ -61,7 +63,7 @@ export class CountingAssistant {
     }
 
     placeSettlementOnSetup(steps) {
-        let match = /(\w+)\s*?placed a settlement_(\S+)/.exec(steps[0]);
+        let match = /([\w#]+)\s*?placed a settlement_(\S+)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -78,7 +80,7 @@ export class CountingAssistant {
     }
 
     takeStartingResources(steps) {
-        let match = /(\w+)\s*?received starting resources:(.+)/.exec(steps[0]);
+        let match = /([\w#]+)\s*?received starting resources:(.+)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -107,7 +109,7 @@ export class CountingAssistant {
     }
 
     takeResources(steps) {
-        let resourceTakingPattern = /(\w+)\s*?got:(.+)/;
+        let resourceTakingPattern = /([\w#]+)\s*?got:(.+)/;
         let match = resourceTakingPattern.exec(steps[0]);
         if (match == null) {
             return steps;
@@ -195,7 +197,7 @@ export class CountingAssistant {
     }
 
     buildSettlement(steps) {
-        let match = /(\w+)\s*?built a settlement/.exec(steps[0]);
+        let match = /([\w#]+)\s*?built a settlement/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -213,7 +215,7 @@ export class CountingAssistant {
     }
 
     buildRoad(steps) {
-        let match = /(\w+)\s*?built a road/.exec(steps[0]);
+        let match = /([\w#]+)\s*?built a road/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -231,7 +233,7 @@ export class CountingAssistant {
     }
 
     buildCity(steps) {
-        let match = /(\w+)\s*?built a city/.exec(steps[0]);
+        let match = /([\w#]+)\s*?built a city/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -249,7 +251,7 @@ export class CountingAssistant {
     }
 
     buyDevCard(steps) {
-        let match = /(\w+)\s*?bought devcard/.exec(steps[0]);
+        let match = /([\w#]+)\s*?bought devcard/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -267,7 +269,7 @@ export class CountingAssistant {
     }
 
     tradeWithPlayer(steps) {
-        let match = /(\w+)\s*?traded:\s*?(.+)\s*?for:\s*?(.+)\s*?with:\s*?(\w+)/.exec(steps[0]);
+        let match = /([\w#]+)\s*?traded:\s*?(.+)\s*?for:\s*?(.+)\s*?with:\s*?([\w#]+)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -295,7 +297,7 @@ export class CountingAssistant {
     }
 
     tradeWithBank(steps) {
-        let match = /(\w+)\s*?gave bank:\s*?(.+)\s*?and took\s*?(.+)/.exec(steps[0]);
+        let match = /([\w#]+)\s*?gave bank:\s*?(.+)\s*?and took\s*?(.+)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -317,7 +319,7 @@ export class CountingAssistant {
     }
 
     stealResource(steps) {
-        let match = /(\w+)\s*?stole.*?(lumber|brick|wool|grain|ore|myth)\s*?from:*\s*?(\w+)/.exec(steps[0]);
+        let match = /([\w#]+)\s*?stole.*?(lumber|brick|wool|grain|ore|myth)\s*?from:*\s*?([\w#]+)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -360,7 +362,7 @@ export class CountingAssistant {
     }
 
     discardResources(steps) {
-        let match = /(\w+)\s*?discarded:(.+)/.exec(steps[0]);
+        let match = /([\w#]+)\s*?discarded:(.+)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -379,7 +381,7 @@ export class CountingAssistant {
     }
 
     takeResourcesWithYearOfPlenty(steps) {
-        let match = /(\w+)\s*?took from bank:\s*?(.+)/.exec(steps[0]);
+        let match = /([\w#]+)\s*?took from bank:\s*?(.+)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -398,16 +400,31 @@ export class CountingAssistant {
     }
 
     stealResourcesWithMonopoly(steps) {
-        let match = /(\w+)\s*?built a settlement/.exec(steps[0]);
+        let match = /([\w#]+)\s*?stole (\d+): (lumber|brick|wool|grain|ore)/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
+
+        let name = match[1];
+        let count = 1 * match[2];
+        let resource = match[3];
+        if (this.playerHands.has(name)) {
+            this.playerHands.get(name).addNamedResource(resource, count);
+        }
+        else {
+            console.warn('Monopoly: unrecognised player name: ' + name);
+        }
+        this.playerHands.forEach((player) => {
+            if (player.name !== name) {
+                player.removeNamedResource(resource, player.resources.get(resource).count);
+            }
+        });
         
         return steps.slice(1);
     }
 
     useDevCard(steps) {
-        let match = /(\w+)\s*?built a settlement/.exec(steps[0]);
+        let match = /([\w#]+)\s*?built a settlement/.exec(steps[0]);
         if (match == null) {
             return steps;
         }
@@ -416,7 +433,7 @@ export class CountingAssistant {
     }
 
     demistifyStolenCards() {
-
+        return false;
     }
 
     #debug() {
