@@ -1,4 +1,6 @@
-import { PlayerHand } from "./models/player";
+import { PlayerHand } from './models/player.js';
+
+const MAX_RESOURCE_COUNT = 19;
 
 export class CountingAssistant {
 
@@ -42,16 +44,7 @@ export class CountingAssistant {
     calculate(steps) {
         let stepsToCalc = steps.map((step, i) => `step ${i}: ${step}`);
         while (stepsToCalc.length !== 0) {
-            const stepsBeforeCalc = stepsToCalc.map(step => step);
             stepsToCalc = this.#calculateAndConsumeSteps(stepsToCalc);
-            console.log('Consumed steps:');
-            for (let i = 0; i < stepsBeforeCalc.length - stepsToCalc.length; i++) {
-                console.log(' - ' + stepsBeforeCalc[i]);
-            }
-            this.#debug();
-            if (this.demistifyStealingCards()) {
-                this.#debug();
-            }
         }
     }
 
@@ -59,6 +52,12 @@ export class CountingAssistant {
         for (let stepHandler of this.stepHandlers) {
             let remainingSteps = stepHandler.call(this, steps);
             if (remainingSteps.length < steps.length) {
+                console.log('Consumed steps:');
+                for (let i = 0; i < steps.length - remainingSteps.length; i++) {
+                    console.log(' - ' + steps[i]);
+                }
+                this.#debug();
+
                 return remainingSteps;
             }
         }
@@ -215,6 +214,11 @@ export class CountingAssistant {
             console.warn('Build settlement: unrecognised player name: ' + name);
         }
         this.bank.addResources(1, 1, 1, 1, 0);
+
+        // demistifying can only be done after resources were used
+        if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
+            this.#debug();
+        }
         
         return steps.slice(1);
     }
@@ -233,6 +237,11 @@ export class CountingAssistant {
             console.warn('Build road: unrecognised player name: ' + name);
         }
         this.bank.addResources(1, 1, 0, 0, 0);
+
+        // demistifying can only be done after resources were used
+        if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
+            this.#debug();
+        }
         
         return steps.slice(1);
     }
@@ -251,6 +260,11 @@ export class CountingAssistant {
             console.warn('Build city: unrecognised player name: ' + name);
         }
         this.bank.addResources(0, 0, 0, 2, 3);
+
+        // demistifying can only be done after resources were used
+        if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
+            this.#debug();
+        }
         
         return steps.slice(1);
     }
@@ -269,6 +283,11 @@ export class CountingAssistant {
             console.warn('Buy dev card: unrecognised player name: ' + name);
         }
         this.bank.addResources(0, 0, 1, 1, 1);
+
+        // demistifying can only be done after resources were used
+        if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
+            this.#debug();
+        }
         
         return steps.slice(1);
     }
@@ -297,6 +316,11 @@ export class CountingAssistant {
         else {
             console.warn('Trade with player: unrecognised accepted player name: ' + name2);
         }
+
+        // demistifying can only be done after resources were used
+        if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
+            this.#debug();
+        }
         
         return steps.slice(1);
     }
@@ -319,6 +343,11 @@ export class CountingAssistant {
         }
         this.bank.removeResourcesFromText(resources2);
         this.bank.addResourcesFromText(resources1);
+
+        // demistifying can only be done after resources were used
+        if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
+            this.#debug();
+        }
         
         return steps.slice(1);
     }
@@ -362,6 +391,11 @@ export class CountingAssistant {
                 console.warn('Steal resources: unrecognised stolen player name: ' + name2);
             }
         }
+
+        // demistifying can only be done after resources were used
+        if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
+            this.#debug();
+        }
         
         return steps.slice(1);
     }
@@ -381,6 +415,11 @@ export class CountingAssistant {
             console.warn('Discard resources: unrecognised player name: ' + name);
         }
         this.bank.addResourcesFromText(resources);
+
+        // demistifying can only be done after resources were used
+        if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
+            this.#debug();
+        }
         
         return steps.slice(1);
     }
@@ -421,9 +460,15 @@ export class CountingAssistant {
         }
         this.playerHands.forEach((player) => {
             if (player.name !== name) {
+                // NOTE: the model can be broken here, if players get stolen have stealing/stolen cards in there hand
                 player.removeNamedResource(resource, player.resources.get(resource).count);
             }
         });
+
+        // demistifying can only be done after resources were used
+        if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
+            this.#debug();
+        }
         
         return steps.slice(1);
     }
@@ -445,9 +490,7 @@ export class CountingAssistant {
             toContinue = false;
             let res = false;
             for (const player of this.orderedPlayerHands) {
-                if (player.stealing.length > 0) {
-                    res |= player.demistifyStealingCards(this.orderedPlayerHands);
-                }
+                res |= player.demistifyStealingCards(this.orderedPlayerHands);
             }
             demistified |= res;
             toContinue = res;
@@ -456,10 +499,49 @@ export class CountingAssistant {
         return demistified;
     }
 
-    #debug() {
+    normaliseZeroCard() {
+        let normalised = false;
         for (const player of this.orderedPlayerHands) {
-            console.log(JSON.stringify(player));
+            normalised |= player.normaliseZeroCard();
         }
+
+        return normalised;
+    }
+
+    #debug() {
+        console.log('----------------------------------------------------------------------------------------------');
+        console.log(`   ${'Player'.padEnd(19)} ` +
+            `${'LUMBER'.padEnd(8) } ` +
+            `${'BRICK'.padEnd(8) } ` +
+            `${'WOOL'.padEnd(8) } ` +
+            `${'GRAIN'.padEnd(8) } ` +
+            `${'ORE'.padEnd(8) } ` +
+            `${'STEALING'.padEnd(8) } ` +
+            `${'STOLEN'.padEnd(8) } ` +
+            `${'TOTAL'.padEnd(8) } `
+        );
+        for (const player of this.orderedPlayerHands) {
+            console.log(` - ${player.name.padEnd(20)} ` +
+                `${player.lumber.count.toString().padEnd(8) } ` +
+                `${player.brick.count.toString().padEnd(8) } ` +
+                `${player.wool.count.toString().padEnd(8) } ` +
+                `${player.grain.count.toString().padEnd(8) } ` +
+                `${player.ore.count.toString().padEnd(8) } ` +
+                `${player.stealing.length.toString().padEnd(8) } ` +
+                `${player.stolen.length.toString().padEnd(8) } ` +
+                `${player.totalResources.toString().padEnd(8) } `
+            );
+        }
+        console.log(` - ${'BANK'.padEnd(20)} ` +
+                `${this.bank.lumber.count.toString().padEnd(8) } ` +
+                `${this.bank.brick.count.toString().padEnd(8) } ` +
+                `${this.bank.wool.count.toString().padEnd(8) } ` +
+                `${this.bank.grain.count.toString().padEnd(8) } ` +
+                `${this.bank.ore.count.toString().padEnd(8) } ` +
+                `${this.bank.stealing.length.toString().padEnd(8) } ` +
+                `${this.bank.stolen.length.toString().padEnd(8) } ` +
+                `${this.bank.totalResources.toString().padEnd(8) } `
+            );
     }
 
     #hash(content) {

@@ -1,5 +1,5 @@
-import { ResourceCard } from "./resource-card";
-import { StolenCard } from "./stolen-card";
+import { ResourceCard } from './resource-card.js';
+import { StolenCard } from './stolen-card.js';
 
 export class PlayerHand {
     
@@ -79,7 +79,7 @@ export class PlayerHand {
             - this.stolen.length;
     }
 
-    #hasOnlylumber() {
+    #onlyHasLumber() {
         return this.lumber.count > 0 &&
             this.lumber.count == this.totalResources &&
             this.brick.count == 0 &&
@@ -89,7 +89,7 @@ export class PlayerHand {
             this.stealing.length == 0;
     }
 
-    #hasOnlyBrick() {
+    #onlyHasBrick() {
         return this.brick.count > 0 &&
             this.brick.count == this.totalResources &&
             this.lumber.count == 0 &&
@@ -99,7 +99,7 @@ export class PlayerHand {
             this.stealing.length == 0;
     }
 
-    #hasOnlyWool() {
+    #onlyHasWool() {
         return this.wool.count > 0 &&
             this.wool.count == this.totalResources &&
             this.lumber.count == 0 &&
@@ -109,7 +109,7 @@ export class PlayerHand {
             this.stealing.length == 0;
     }
 
-    #hasOnlyGrain() {
+    #onlyHasGrain() {
         return this.grain.count > 0 &&
             this.grain.count == this.totalResources &&
             this.lumber.count == 0 &&
@@ -119,7 +119,7 @@ export class PlayerHand {
             this.stealing.length == 0;
     }
 
-    #hasOnlyOre() {
+    #onlyHasOre() {
         return this.ore.count > 0 &&
             this.ore.count == this.totalResources &&
             this.lumber.count == 0 &&
@@ -129,7 +129,7 @@ export class PlayerHand {
             this.stealing.length == 0;
     }
 
-    #hasOnlyOneStealingCard() {
+    #onlyHasOneStealingCard() {
         return this.totalResources == 1 &&
             this.stealing.length == 1 &&
             this.lumber.count == 0 &&
@@ -145,32 +145,32 @@ export class PlayerHand {
         // - being stolen player has just a single card, and it is a stealing card
         // - other cases
 
-        if (playerHand.#hasOnlylumber()) {
+        if (playerHand.#onlyHasLumber()) {
             playerHand.removeNamedResource('lumber', 1);
             this.addNamedResource('lumber', 1);
             console.log('Stolen resource is lumber');
         }
-        else if (playerHand.#hasOnlyBrick()) {
+        else if (playerHand.#onlyHasBrick()) {
             playerHand.removeNamedResource('brick', 1);
             this.addNamedResource('brick', 1);
             console.log('Stolen resource is brick');
         }
-        else if (playerHand.#hasOnlyWool()) {
+        else if (playerHand.#onlyHasWool()) {
             playerHand.removeNamedResource('wool', 1);
             this.addNamedResource('wool', 1);
             console.log('Stolen resource is wool');
         }
-        else if (playerHand.#hasOnlyGrain()) {
+        else if (playerHand.#onlyHasGrain()) {
             playerHand.removeNamedResource('grain', 1);
             this.addNamedResource('grain', 1);
             console.log('Stolen resource is grain');
         }
-        else if (playerHand.#hasOnlyOre()) {
+        else if (playerHand.#onlyHasOre()) {
             playerHand.removeNamedResource('ore', 1);
             this.addNamedResource('ore', 1);
             console.log('Stolen resource is ore');
         }
-        else if (playerHand.#hasOnlyOneStealingCard()) {
+        else if (playerHand.#onlyHasOneStealingCard()) {
             const stolenCard = playerHand.stealing.pop();
             playerHand.#countTotalResources();
             this.stealing.push(stolenCard);
@@ -199,6 +199,7 @@ export class PlayerHand {
     demistifyStealingCards(allPlayerHands) {
         let result = this.#tryDemistifyScenario1(allPlayerHands);
         result |= this.#tryDemistifyScenario2(allPlayerHands);
+        result |= this.#tryDemistifyScenario3(allPlayerHands);
 
         return result;
     }
@@ -206,8 +207,8 @@ export class PlayerHand {
     #tryDemistifyScenario1(allPlayerHands) {
         // 1st scenario: 
         //  - a player used N resources of the same type that he doesn't have in his hand
-        //  - he has exactly N stealing card
-        //  - the stealing cards are stolen from players who have that resource
+        //  - he has exactly N stealing cards
+        //  -> all N stealing cards can be demistified to the used resource
         // example:
         //  - player A placed a settlement while he didn't have brick
         //  - A has a card stolen from B
@@ -244,8 +245,8 @@ export class PlayerHand {
     #tryDemistifyScenario2(allPlayerHands) {
         // 2nd scenario: 
         //  - a player used N resources of the same type that he doesn't have in his hand
-        //  - he has M stealing card, where only N card can be resolve to the used resource, M-N other cards cannot
-        //  - the stealing cards are stolen from players who have that resource
+        //  - he has M stealing cards, where exactly N cards can be resolve to the used resource, M-N other cards cannot
+        //  -> all N stealing cards can be demistified to the used resource
         // example:
         //  - player A placed a settlement while he didn't have brick
         //  - A has a card stolen from B
@@ -259,12 +260,15 @@ export class PlayerHand {
         //  - C still has a stolen card
         //  - D has no brick, no stolen card
 
+        let result = false;
         for (const resource of this.resources.values()) {
             if (resource.count < 0) {
                 const stealingCards = this.#getStealingCardsThatCanResolveTo(resource.name);
                 if (stealingCards.length == 0) {
                     console.warn(`A resource of type: ${resource.name} is used up but can't be resolved from stealing cards`);
                     console.warn(JSON.stringify(this.stealing));
+                    
+                    continue;
                 }
                 if (resource.count + stealingCards.length == 0) {
                     console.log(`Demistifing scenario 2 for user: ${this.name}, negative resource: ${resource.name}, count: ${resource.count}`);
@@ -276,12 +280,67 @@ export class PlayerHand {
                         }
                     }
         
-                    return true;
+                    result = true;
                 }
             }
         }
 
-        return false;
+        return result;
+    }
+
+    #tryDemistifyScenario3(allPlayerHands) {
+        // 3rd scenario: 
+        //  - a player used N resources of the same type that he doesn't have in his hand
+        //  - he has M stealing cards, where K cards can be resolve to the used resource, M-K other cards cannot
+        //  - all K cards were stolen from a single player
+        //  -> all K stealing cards can be demistified to the used resource
+        //  ## note 1: N is always less than or equal to K
+        //  ## when N is equal to K, it becomes the scenario 2
+        //  ## when N is greater than K, we have a problem with this model!!!
+        //  ## note 2: because K < N, we don't know which K cards to demistify, if we try to demistify random K cards
+        //  ## it will affect later calculation... --> just comment it out atm
+        // example:
+        //  - player A placed a settlement while he didn't have brick
+        //  - A has 2 cards stolen from B
+        //  - A also has a card stolen from C
+        //  - at the time of the 1st stealing, B has two bricks
+        //  - at the time of the 2nd stealing, B has two bricks
+        //  - at the time of the stealing, C has no brick
+        // result:
+        //  - the brick card that A used must be stolen from B
+        //  - now B only has one brick, 1 stolen card
+        //  - C has a stolen card
+
+        let result = false;
+        for (const resource of this.resources.values()) {
+            if (resource.count < 0) {
+                const stealingCards = this.#getStealingCardsThatCanResolveTo(resource.name);
+                if (stealingCards.length == 0) {
+                    console.warn(`A resource of type: ${resource.name} is used up but can't be resolved from stealing cards`);
+                    console.warn(JSON.stringify(this.stealing));
+                    
+                    continue;
+                }
+                let stolenFroms = [];
+                for (let stealingCard of stealingCards) {
+                    if (!stolenFroms.includes(stealingCard.stolenFrom)) {
+                        stolenFroms.push(stealingCard.stolenFrom);
+                    }
+                }
+                if (resource.count < stealingCards.length) {
+                    if (stolenFroms.length == 1) { // all resolvable cards were stolen from a single player
+                        console.log(`Demistifing scenario 3 for user: ${this.name}, negative resource: ${resource.name}, count: ${resource.count}`);
+                        // TODO: implement the logic here
+                        console.log('!!! Not yet implemented');
+                    }
+                }
+                else {
+                    console.warn('Perhaps the model is broken here, when used resource count > number of resolvable stealing cards');
+                }
+            }
+        }
+
+        return result;
     }
 
     #getStealingCardsThatCanResolveTo(resourceName) {
@@ -327,5 +386,23 @@ export class PlayerHand {
             this.stolen.splice(tobeRemoved[i], 1);
         }
         this.#countTotalResources();
+    }
+
+    normaliseZeroCard() {
+        if (this.totalResources == 0 && (this.stealing.length > 0 || this.stolen.length > 0)) {
+            console.log('Normalising zero card for player: ' + this.name);
+            this.lumber.count = 0;
+            this.brick.count = 0;
+            this.wool.count = 0;
+            this.grain.count = 0;
+            this.ore.count = 0;
+            this.stealing = [];
+            this.stolen = [];
+            this.#countTotalResources();
+
+            return true;
+        }
+
+        return false;
     }
 }

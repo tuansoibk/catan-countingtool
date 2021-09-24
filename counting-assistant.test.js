@@ -573,11 +573,7 @@ test('demistify the scenario when a player uses up a single resource while havin
     const step2 = 'Marcie built a settlement_red';
     underTest.buildSettlement([step2]);
 
-    // when
-    const res = underTest.demistifyStealingCards();
-
     // then
-    expect(res).toBeTruthy();
     expect(underTest.playerHands.get('Marcie').totalResources).toBe(1);
     expect(underTest.playerHands.get('Marcie').stealing.length).toBe(0);
     expect(underTest.playerHands.get('Marcie').stolen.length).toBe(0);
@@ -603,11 +599,7 @@ test('demistify the scenario when a player uses up 2 resources of same type whil
     const step4 = 'Marcie bought devcard';
     underTest.buyDevCard([step4]);
 
-    // when
-    const res = underTest.demistifyStealingCards();
-
     // then
-    expect(res).toBeTruthy();
     expect(underTest.playerHands.get('Marcie').totalResources).toBe(0);
     expect(underTest.playerHands.get('Marcie').stealing.length).toBe(0);
     expect(underTest.playerHands.get('Marcie').stolen.length).toBe(0);
@@ -634,11 +626,7 @@ test('demistify the scenario when a player uses up a single resource while havin
     const step3 = 'Marcie built a settlement_red';
     underTest.buildSettlement([step3]);
 
-    // when
-    const res = underTest.demistifyStealingCards();
-
     // then
-    expect(res).toBeTruthy();
     expect(underTest.playerHands.get('Marcie').totalResources).toBe(1);
     expect(underTest.playerHands.get('Marcie').stealing.length).toBe(0);
     expect(underTest.playerHands.get('Marcie').stolen.length).toBe(0);
@@ -661,7 +649,7 @@ test('demistify the scenario when a player uses up a single resource while havin
     expect(underTest.playerHands.get('Schwab').ore.count).toBe(1);
 });
 
-test('demistify the scenario when a player uses up a single resource while having 2 stealing cards, one of them cannot resolve to the used resource', () => {
+test('demistify the scenario when a player uses up a single resource while having 2 stealing cards and only one of them can be resolved to the used resource', () => {
     // given
     setup4Players();
     underTest.playerHands.get('Marcie').addResources(1, 1, 0, 1, 1);
@@ -674,11 +662,7 @@ test('demistify the scenario when a player uses up a single resource while havin
     const step3 = 'Marcie built a settlement_red';
     underTest.buildSettlement([step3]);
 
-    // when
-    const res = underTest.demistifyStealingCards();
-
     // then
-    expect(res).toBeTruthy();
     expect(underTest.playerHands.get('Marcie').totalResources).toBe(2);
     expect(underTest.playerHands.get('Marcie').stealing.length).toBe(1);
     let stolenCard = underTest.playerHands.get('Marcie').stealing[0];
@@ -698,6 +682,43 @@ test('demistify the scenario when a player uses up a single resource while havin
     expect(underTest.playerHands.get('Schwab').stealing.length).toBe(0);
     expect(underTest.playerHands.get('Schwab').stolen.length).toBe(0);
     expect(underTest.playerHands.get('Schwab').wool.count).toBe(0);
+});
+
+test('nomarlise zero card', () => {
+    // given
+    setup4Players();
+    underTest.playerHands.get('Marcie').addResources(1, 0, 0, 1, 0);
+    underTest.playerHands.get('Hagai').addResources(1, 1, 1, 1, 1);
+    underTest.playerHands.get('Schwab').addResources(1, 1, 1, 1, 1);
+    const step1 = 'Marcie stole myth from: Hagai';
+    underTest.stealResource([step1]);
+    const step2 = 'Marcie stole myth from: Schwab';
+    underTest.stealResource([step2]);
+    const step3 = 'Marcie built a settlement_red';
+    underTest.buildSettlement([step3]);
+
+    // then
+    expect(underTest.playerHands.get('Marcie').totalResources).toBe(0);
+    expect(underTest.playerHands.get('Marcie').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Marcie').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Marcie').brick.count).toBe(0);
+    expect(underTest.playerHands.get('Marcie').wool.count).toBe(0);
+    expect(underTest.playerHands.get('Hagai').totalResources).toBe(4);
+    expect(underTest.playerHands.get('Hagai').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Hagai').stolen.length).toBe(1);
+    expect(underTest.playerHands.get('Hagai').lumber.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').brick.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').wool.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').grain.count).toBe(1);
+    expect(underTest.playerHands.get('Hagai').ore.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').totalResources).toBe(4);
+    expect(underTest.playerHands.get('Schwab').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Schwab').stolen.length).toBe(1);
+    expect(underTest.playerHands.get('Schwab').lumber.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').brick.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').wool.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').grain.count).toBe(1);
+    expect(underTest.playerHands.get('Schwab').ore.count).toBe(1);
 });
 
 test('integration test: can calculate given all game steps', () => {
