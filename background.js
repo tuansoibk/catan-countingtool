@@ -28,12 +28,16 @@ chrome.runtime.onMessage.addListener(
             'from a content script:' + sender.tab.url :
             'from the extension');
         console.log('request = ' + request);
-        if (request.message === 'reinit') {
+        if (request.message == 'reinit') {
             init();
             sendResponse({ result: 'success' });
         }
-        else if (request.message === 'reload message completed') {
+        else if (request.message == 'reload message completed') {
             reloadAllSteps();
+            sendResponse({ result: 'success' });
+        }
+        else if (request.message == 'collect game logs completed') {
+            printGameLogs();
             sendResponse({ result: 'success' });
         }
         else {
@@ -73,5 +77,13 @@ function reloadAllSteps() {
                 );
             }
         );
+    });
+}
+
+function printGameLogs() {
+    chrome.storage.local.get(['gameLogs'], (result) => {
+        let gameLogs = result.gameLogs;
+        console.clear();
+        gameLogs.forEach(log => console.log(log));
     });
 }

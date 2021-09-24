@@ -33,6 +33,15 @@ function initEvents() {
         });
     });
 
+    let gameLogs = document.getElementById('game-logs');
+    gameLogs.addEventListener('click', async () => {
+        let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            function: collectGameLogs,
+        });
+    });
+
     let upVp = document.getElementById('up-vp');
     upVp.addEventListener('click', async () => {
         chrome.storage.local.get(['devCards' ], (result) => {
@@ -94,6 +103,24 @@ function reloadPlaySteps() {
             );
         });
     }
+}
+
+function collectGameLogs() {
+    let messages = document.getElementById('game-log-text').getElementsByClassName('message_post');
+    let logs = [];
+    for (const message of messages) {
+        logs.push(message.innerHTML);
+    }
+    chrome.storage.local.set({ 'gameLogs': logs }, function () {
+        chrome.runtime.sendMessage(
+            {
+                message: 'collect game logs completed'
+            },
+            function (response) {
+                console.log('collect game logs completed response = ' + response.result);
+            }
+        );
+    });
 }
 
 chrome.runtime.onMessage.addListener(

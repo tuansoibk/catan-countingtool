@@ -2,6 +2,11 @@ body {
   width: 400px;
 }
 
+#game-logs {
+  width: 90px;
+  margin-left: 130px;
+}
+
 button {
   height: 30px;
   width: 60px;

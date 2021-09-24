@@ -684,6 +684,27 @@ test('demistify the scenario when a player uses up a single resource while havin
     expect(underTest.playerHands.get('Schwab').wool.count).toBe(0);
 });
 
+test('demistify the scenario when a player only has a single resource type while having 2 stolen cards', () => {
+    // given
+    setup4Players();
+    underTest.playerHands.get('Schwab').addResources(1, 1, 1, 1, 3);
+    const step1 = 'Marcie stole myth from: Schwab 1';
+    underTest.stealResource([step1]);
+    const step2 = 'Marcie stole myth from: Schwab 2';
+    underTest.stealResource([step2]);
+    const step3 = 'Schwab built a settlement_red';
+    underTest.buildSettlement([step3]);
+
+    // then
+    expect(underTest.playerHands.get('Marcie').totalResources).toBe(2);
+    expect(underTest.playerHands.get('Marcie').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Marcie').ore.count).toBe(2);
+    expect(underTest.playerHands.get('Schwab').totalResources).toBe(1);
+    expect(underTest.playerHands.get('Schwab').stealing.length).toBe(0);
+    expect(underTest.playerHands.get('Schwab').stolen.length).toBe(0);
+    expect(underTest.playerHands.get('Schwab').ore.count).toBe(1);
+});
+
 test('nomarlise zero card', () => {
     // given
     setup4Players();

@@ -200,6 +200,7 @@ export class PlayerHand {
         let result = this.#tryDemistifyScenario1(allPlayerHands);
         result |= this.#tryDemistifyScenario2(allPlayerHands);
         result |= this.#tryDemistifyScenario3(allPlayerHands);
+        result |= this.#tryDemistifyScenario4(allPlayerHands);
 
         return result;
     }
@@ -272,7 +273,7 @@ export class PlayerHand {
                 }
                 if (resource.count + stealingCards.length == 0) {
                     console.log(`Demistifing scenario 2 for user: ${this.name}, negative resource: ${resource.name}, count: ${resource.count}`);
-                    stealingCards.map(card => card.demistifiedResource = resource.name);
+                    stealingCards.forEach(card => card.demistifiedResource = resource.name);
                     this.#removeDemistifiedStealingCard(stealingCards);
                     for (const playerHand of allPlayerHands) {
                         if (playerHand.name != this.name) {
@@ -341,6 +342,111 @@ export class PlayerHand {
         }
 
         return result;
+    }
+
+    #onlyHasLumberAndStolenCard() {
+        return this.lumber.count > 0 &&
+            this.stolen.length > 0 &&
+            this.lumber.count - this.stolen.length == this.totalResources &&
+            this.brick.count == 0 &&
+            this.wool.count == 0 &&
+            this.grain.count == 0 &&
+            this.ore.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #onlyHasBrickAndStolenCard() {
+        return this.brick.count > 0 &&
+            this.stolen.length > 0 &&
+            this.brick.count - this.stolen.length == this.totalResources &&
+            this.lumber.count == 0 &&
+            this.wool.count == 0 &&
+            this.grain.count == 0 &&
+            this.ore.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #onlyHasWoolAndStolenCard() {
+        return this.wool.count > 0 &&
+            this.stolen.length > 0 &&
+            this.wool.count - this.stolen.length == this.totalResources &&
+            this.lumber.count == 0 &&
+            this.brick.count == 0 &&
+            this.grain.count == 0 &&
+            this.ore.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #onlyHasGrainAndStolenCard() {
+        return this.grain.count > 0 &&
+            this.stolen.length > 0 &&
+            this.grain.count - this.stolen.length == this.totalResources &&
+            this.lumber.count == 0 &&
+            this.brick.count == 0 &&
+            this.wool.count == 0 &&
+            this.ore.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #onlyHasOreAndStolenCard() {
+        return this.ore.count > 0 &&
+            this.stolen.length > 0 &&
+            this.ore.count - this.stolen.length == this.totalResources &&
+            this.lumber.count == 0 &&
+            this.brick.count == 0 &&
+            this.wool.count == 0 &&
+            this.grain.count == 0 &&
+            this.stealing.length == 0;
+    }
+
+    #tryDemistifyScenario4(allPlayerHands) {
+        // 4th scenario: 
+        //  - a player only has a single resource type
+        //  - he has some cards stolen by others
+        //  -> all stolen cards can be demistified to the remaining resource type
+        // example:
+        //  - player A has 1 lumber, 1 brick, 1 wool, 1 grain, 3 ore
+        //  - A has been stolen by B twice
+        //  - A built a settelment
+        // result:
+        //  - the stolen cards must be ore cards
+        //  - now A has 1 ore card
+        //  - B has 2 added ore cards
+
+        if (this.stolen.length > 0) {
+            let resourceName = '';
+            if (this.#onlyHasLumberAndStolenCard()) {
+                resourceName = 'lumber';
+            }
+            else if (this.#onlyHasBrickAndStolenCard()) {
+                resourceName = 'brick';
+            }
+            else if (this.#onlyHasWoolAndStolenCard()) {
+                resourceName = 'wool';
+            }
+            else if (this.#onlyHasGrainAndStolenCard()) {
+                resourceName = 'grain';
+            }
+            else if (this.#onlyHasOreAndStolenCard()) {
+                resourceName = 'ore';
+            }
+
+            if (resourceName != '') {
+                console.log(`Demistifing scenario 4 for user: ${this.name}, resource: ${resourceName}, count: ${this.stolen.length}`);
+                const stolenCards = [...this.stolen];
+                stolenCards.forEach(card => card.demistifiedResource = resourceName);
+                this.#removeDemistifiedStolenCard(stolenCards);
+                for (const playerHand of allPlayerHands) {
+                    if (playerHand.name != this.name) {
+                        playerHand.#removeDemistifiedStealingCard(stolenCards);
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     #getStealingCardsThatCanResolveTo(resourceName) {
