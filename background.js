@@ -3,7 +3,6 @@ import { PlayerHand } from './models/player.js';
 
 let myPlayerName = 'player';
 let countingAssistant;
-let devCards = undefined;
 
 function init() {
     countingAssistant = new CountingAssistant();
@@ -11,7 +10,7 @@ function init() {
     chrome.storage.local.set({ 'player2': new PlayerHand('Player2', 'black') });
     chrome.storage.local.set({ 'player3': new PlayerHand('Player3', 'black') });
     chrome.storage.local.set({ 'bank': countingAssistant.bank });
-    chrome.storage.local.set({ 'devCards' : devCards });
+    chrome.storage.local.set({ 'devCards' : countingAssistant.devCards });
     chrome.storage.sync.get(['myPlayerName'], (result) => {
         myPlayerName = result.myPlayerName;
     });
@@ -50,11 +49,11 @@ chrome.runtime.onMessage.addListener(
 
 function reloadAllSteps() {
     console.log('reload all steps');
-    chrome.storage.local.get(['allSteps'], (result) => {
+    chrome.storage.local.get(['allSteps', 'myPlayerName'], (result) => {
         let allSteps = result.allSteps;
         // reset and count from begining
         countingAssistant = new CountingAssistant();
-        countingAssistant.lastPlayerName = myPlayerName;
+        countingAssistant.lastPlayerName = result.myPlayerName;
         countingAssistant.calculate(allSteps);
 
         // update counting
@@ -64,7 +63,7 @@ function reloadAllSteps() {
                 'player2': countingAssistant.orderedPlayerHands[1],
                 'player3': countingAssistant.orderedPlayerHands[2],
                 'bank': countingAssistant.bank,
-                'devCards': devCards
+                'devCards': countingAssistant.devCards,
             },
             function () {
                 chrome.runtime.sendMessage(

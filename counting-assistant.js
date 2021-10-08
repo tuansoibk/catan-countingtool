@@ -1,3 +1,4 @@
+import { DevCards } from './models/dev-cards.js';
 import { PlayerHand } from './models/player.js';
 
 const MAX_RESOURCE_COUNT = 19;
@@ -13,6 +14,7 @@ export class CountingAssistant {
         this.bank.wool.count = 19;
         this.bank.grain.count = 19;
         this.bank.ore.count = 19;
+        this.devCards = new DevCards();
         this.lastPlayerName = 'lastPlayer';
 
         // 1. step handler reads input step array from the beginning and decide if it can consume any step
@@ -283,6 +285,7 @@ export class CountingAssistant {
             console.warn('Buy dev card: unrecognised player name: ' + name);
         }
         this.bank.addResources(0, 0, 1, 1, 1);
+        this.devCards.remaining--;
 
         // demistifying can only be done after resources were used
         if (this.demistifyStealingCards() || this.normaliseZeroCard()) {
@@ -474,9 +477,27 @@ export class CountingAssistant {
     }
 
     useDevCard(steps) {
-        let match = /([\w#]+)\s*?built a settlement/.exec(steps[0]);
+        let match = /([\w#]+)\s*?used\s*?(Knight|Road Building|Year of Plenty|Monopoly)/.exec(steps[0]);
         if (match == null) {
             return steps;
+        }
+
+        switch (match[2]) {
+            case "Knight":
+                this.devCards.knights--;
+                break;
+            case "Road Building":
+                this.devCards.roadBuildings--;
+                break;
+            case "Year of Plenty":
+                this.devCards.yearOfPlenties--;
+                break;
+            case "Monopoly":
+                this.devCards.monopolies--;
+                break;
+            default:
+                console.warn('Unrecognised dev card: ' + match[2]);
+                break;
         }
         
         return steps.slice(1);

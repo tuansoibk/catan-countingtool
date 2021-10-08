@@ -563,6 +563,32 @@ test('player used Monopoly and stole all cards of a single resources from other 
     expect(underTest.playerHands.get('Hagai').lumber.count).toBe(0);
 });
 
+test('player bought and used a dev card', () => {
+    // given
+    setup4Players();
+    const steps = [
+        "Marcie bought devcard",
+        "Hagai bought devcard",
+        "Schwab bought devcard",
+        "Elly bought devcard",
+        "Marcie used Knight",
+        "Hagai used Year of Plenty",
+        "Schwab used Monopoly",
+        "Elly used Road Building"
+    ];
+
+    // when
+    underTest.calculate(steps);
+
+    // then
+    expect(underTest.devCards.knights).toBe(13);
+    expect(underTest.devCards.yearOfPlenties).toBe(1);
+    expect(underTest.devCards.monopolies).toBe(1);
+    expect(underTest.devCards.roadBuildings).toBe(1);
+    expect(underTest.devCards.victoryPoints).toBe(5);
+    expect(underTest.devCards.remaining).toBe(21);
+});
+
 test('demistify the scenario when a player uses up a single resource while having one stealing card', () => {
     // given
     setup4Players();

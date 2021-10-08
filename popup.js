@@ -25,7 +25,7 @@ function initEvents() {
     let reload = document.getElementById('reload');
     reload.addEventListener('click', async () => {
         document.getElementById('warning').style.display = 'none';
-
+        chrome.storage.local.set({'myPlayerName': document.getElementById('player-name').value});
         let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         chrome.scripting.executeScript({
             target: { tabId: tab.id },
@@ -44,7 +44,7 @@ function initEvents() {
 
     let upVp = document.getElementById('up-vp');
     upVp.addEventListener('click', async () => {
-        chrome.storage.local.get(['devCards' ], (result) => {
+        chrome.storage.local.get(['devCards'], (result) => {
             if (result.devCards.victoryPoint < 5) {
                 result.devCards.victoryPoint++;
                 chrome.storage.local.set({ 'devCards': result.devCards });
@@ -55,7 +55,7 @@ function initEvents() {
 
     let downVp = document.getElementById('down-vp');
     downVp.addEventListener('click', async () => {
-        chrome.storage.local.get(['devCards' ], (result) => {
+        chrome.storage.local.get(['devCards'], (result) => {
             if (result.devCards.victoryPoint > 0) {
                 result.devCards.victoryPoint--;
                 chrome.storage.local.set({ 'devCards': result.devCards });
@@ -192,11 +192,11 @@ function reloadPlayerData() {
         document.getElementById('ore-bank').textContent = result.bank.ore.count;
 
         // dev cards
-        document.getElementById('knight').textContent = result.devCards.knight;
-        document.getElementById('road').textContent = result.devCards.roadBuilding;
-        document.getElementById('plenty').textContent = result.devCards.yearOfPlenty;
-        document.getElementById('mono').textContent = result.devCards.monopoly;
-        document.getElementById('vp').textContent = result.devCards.victoryPoint;
-        document.getElementById('remaining-devcard').textContent = result.devCards.remainingCards;
+        document.getElementById('knight').textContent = result.devCards.knights;
+        document.getElementById('road').textContent = result.devCards.roadBuildings;
+        document.getElementById('plenty').textContent = result.devCards.yearOfPlenties;
+        document.getElementById('mono').textContent = result.devCards.monopolies;
+        document.getElementById('vp').textContent = result.devCards.victoryPoints;
+        document.getElementById('remaining-devcard').textContent = result.devCards.remaining;
     });
 }
