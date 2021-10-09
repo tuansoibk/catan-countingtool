@@ -8,9 +8,11 @@
     <div>Your player name: <input id="player-name"></input></div>
     <button id="reinit">Init</button>
     <button id="reload">Reload</button>
+    <button id="show4">Show 4th</button>
+    <button id="game-logs">Game logs</button>
     <script src="popup.js"></script>
 
-    <div class="container" id="player-container">
+    <div class="container" id="player-container-1">
       <div class="title">
         <h3 id="title-player-1">Player 1</h3>
       </div>
@@ -34,11 +36,14 @@
           <span><img src="/images/card_ore.svg"></span><span class="counter" id="ore-1">0</span>
         </div>
         <div class="resource">
-          <span><img src="/images/card_rescardback.svg"></span><span class="counter" id="myth-1">0</span>
+          <span><img src="/images/card_rescardback.svg"></span><span class="counter" id="stealing-1">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_rescardback_gray.svg"></span><span class="counter" id="stolen-1">0</span>
         </div>
       </div>
     </div>
-    <div class="container" id="player-container">
+    <div class="container" id="player-container-2">
       <div class="title">
         <h3 id="title-player-2">Player 2</h3>
       </div>
@@ -62,11 +67,14 @@
           <span><img src="/images/card_ore.svg"></span><span class="counter" id="ore-2">0</span>
         </div>
         <div class="resource">
-          <span><img src="/images/card_rescardback.svg"></span><span class="counter" id="myth-2">0</span>
+          <span><img src="/images/card_rescardback.svg"></span><span class="counter" id="stealing-2">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_rescardback_gray.svg"></span><span class="counter" id="stolen-2">0</span>
         </div>
       </div>
     </div>
-    <div class="container" id="player-container">
+    <div class="container" id="player-container-3">
       <div class="title">
         <h3 id="title-player-3">Player 3</h3>
       </div>
@@ -90,7 +98,41 @@
           <span><img src="/images/card_ore.svg"></span><span class="counter" id="ore-3">0</span>
         </div>
         <div class="resource">
-          <span><img src="/images/card_rescardback.svg"></span><span class="counter" id="myth-3">0</span>
+          <span><img src="/images/card_rescardback.svg"></span><span class="counter" id="stealing-3">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_rescardback_gray.svg"></span><span class="counter" id="stolen-3">0</span>
+        </div>
+      </div>
+    </div>
+    <div class="container" id="player-container-4" style="display: none;">
+      <div class="title">
+        <h3 id="title-player-4">Player 4</h3>
+      </div>
+      <div class="player" id="player-4">
+        <div class="resource resource-total">
+          <span class="total">Total</span><span class="counter" id="total-4">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_lumber.svg"></span><span class="counter" id="lumber-4">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_brick.svg"></span><span class="counter" id="brick-4">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_wool.svg"></span><span class="counter" id="wool-4">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_grain.svg"></span><span class="counter" id="grain-4">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_ore.svg"></span><span class="counter" id="ore-4">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_rescardback.svg"></span><span class="counter" id="stealing-4">0</span>
+        </div>
+        <div class="resource">
+          <span><img src="/images/card_rescardback_gray.svg"></span><span class="counter" id="stolen-4">0</span>
         </div>
       </div>
     </div>

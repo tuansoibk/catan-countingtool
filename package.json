@@ -1,0 +1,26 @@
+{
+  "name": "catan",
+  "version": "1.0.0",
+  "description": "This counting tool help to reveal the number of resource cards that all players have in their hand, including bank cards while you are playing Catan at [Colonist.io](https://colonist.io). It is extremely useful when 'Private Bank Card' is set and you have a Monopoly card in your hand :smiling_imp:.",
+  "main": "background.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuansoibk/catan-countingtool.git"
+  },
+  "author": "tuansoibk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tuansoibk/catan-countingtool/issues"
+  },
+  "homepage": "https://github.com/tuansoibk/catan-countingtool#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "babel-jest": "^27.0.6",
+    "core-js": "^3.16.1",
+    "jest": "^27.0.6"
+  }
+}

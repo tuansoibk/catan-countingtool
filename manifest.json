@@ -1,7 +1,7 @@
 {
     "name": "Catan Counting Tool",
     "description": "Counting Tool for Catan at colonist.io",
-    "version": "1.0",
+    "version": "2.0",
     "manifest_version": 3,
     "background": {
         "service_worker": "background.js",
