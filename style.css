@@ -4,12 +4,11 @@ body {
 
 #game-logs {
   width: 90px;
-  margin-left: 130px;
 }
 
 button {
   height: 30px;
-  width: 60px;
+  width: 70px;
   outline: none;
   margin: 10px;
   border: none;

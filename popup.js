@@ -33,6 +33,21 @@ function initEvents() {
         });
     });
 
+    let show4 = document.getElementById('show4');
+    show4.addEventListener('click', async () => {
+        let container = document.getElementById('player-container-4');
+        let text = show4.textContent;
+        console.log('test ' + text);
+        if (text.includes('Show')) {
+            container.style.display = 'block';
+            show4.textContent = 'Hide 4th';
+        }
+        else {
+            container.style.display = 'none';
+            show4.textContent = 'Show 4th';
+        }
+    });
+
     let gameLogs = document.getElementById('game-logs');
     gameLogs.addEventListener('click', async () => {
         let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -143,7 +158,7 @@ chrome.runtime.onMessage.addListener(
 );
 
 function reloadPlayerData() {
-    chrome.storage.local.get(['player1', 'player2', 'player3', 'bank', 'devCards' ], (result) => {
+    chrome.storage.local.get(['player1', 'player2', 'player3', 'player4', 'bank', 'devCards' ], (result) => {
         //alert('reload player data: ' + result.player1.brick.count);
         // player 1
         let titlePlayer1Ele = document.getElementById('title-player-1');
@@ -183,6 +198,19 @@ function reloadPlayerData() {
         document.getElementById('stealing-3').textContent = result.player3.stealing.length;
         document.getElementById('stolen-3').textContent = -result.player3.stolen.length;
         document.getElementById('total-3').textContent = result.player3.totalResources;
+
+        // player 4
+        let titlePlayer4Ele = document.getElementById('title-player-4');
+        titlePlayer4Ele.innerText = result.player4.name;
+        titlePlayer4Ele.style.color = result.player4.color;
+        document.getElementById('lumber-4').textContent = result.player4.lumber.count;
+        document.getElementById('brick-4').textContent = result.player4.brick.count;
+        document.getElementById('wool-4').textContent = result.player4.wool.count;
+        document.getElementById('grain-4').textContent = result.player4.grain.count;
+        document.getElementById('ore-4').textContent = result.player4.ore.count;
+        document.getElementById('stealing-4').textContent = result.player4.stealing.length;
+        document.getElementById('stolen-4').textContent = -result.player4.stolen.length;
+        document.getElementById('total-4').textContent = result.player4.totalResources;
 
         // bank
         document.getElementById('lumber-bank').textContent = result.bank.lumber.count;

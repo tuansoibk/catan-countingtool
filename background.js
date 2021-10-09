@@ -9,6 +9,7 @@ function init() {
     chrome.storage.local.set({ 'player1': new PlayerHand('Player1', 'black') });
     chrome.storage.local.set({ 'player2': new PlayerHand('Player2', 'black') });
     chrome.storage.local.set({ 'player3': new PlayerHand('Player3', 'black') });
+    chrome.storage.local.set({ 'player4': new PlayerHand('Player4', 'black') });
     chrome.storage.local.set({ 'bank': countingAssistant.bank });
     chrome.storage.local.set({ 'devCards' : countingAssistant.devCards });
     chrome.storage.sync.get(['myPlayerName'], (result) => {
@@ -62,6 +63,7 @@ function reloadAllSteps() {
                 'player1': countingAssistant.orderedPlayerHands[0],
                 'player2': countingAssistant.orderedPlayerHands[1],
                 'player3': countingAssistant.orderedPlayerHands[2],
+                'player4': countingAssistant.orderedPlayerHands[3],
                 'bank': countingAssistant.bank,
                 'devCards': countingAssistant.devCards,
             },
