@@ -12,7 +12,7 @@ This counting tool helps to reveal the number of resource cards that all players
 * Click 'Reload', the extension will show all players' cards in its popup window.
 * Open the extension at any time and click 'Reload' again to fetch for latest update (the extension does not poll for resource changes).
 * If you go for another game, click 'Init' to reset all the countings.
-* If you're speculating another game:
+* If you're spectating another game:
   * Enter the name of the last player in 'Your player name' box.
   * Click 'Show 4th' to show 4th player's cards.
 
